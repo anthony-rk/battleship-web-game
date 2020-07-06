@@ -3,16 +3,41 @@ const sum = (a, b) => {
 };
 
 // Ship Factory Function
-const shipFactory = (shipLength) => {
+const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal) => {
 	let isSunk = false;
-
 	const hitArray = [];
-	for (let i = 0; i < shipLength; i++) {
-		hitArray.push(false);
+
+	if (isHorizontal === true) {
+		for (let i = 0; i < shipLength; i++) {
+			let hitObj = {
+				x: xCoordinate + i,
+				y: yCoordinate,
+				isHit: false
+			}
+			hitArray.push(hitObj);
+		}
+	} else {
+		for (let i = 0; i < shipLength; i++) {
+			let hitObj = {
+				x: xCoordinate,
+				y: yCoordinate + i,
+				isHit: false
+			}
+			hitArray.push(hitObj);
+		}
 	}
-	const hit = (spotHit) => {
-		hitArray[spotHit] = true;
-	}
+	
+	// Call this when the Game Board is hit on a spot that hasShip === true
+	const hit = (xCoordinate, yCoordinate) => {
+		// find the spot in hitArray, set isHit to TRUE
+		let arrayIndex = hitArray.findIndex((element) => {
+			if (element.x === xCoordinate && element.y === yCoordinate) {
+			  return true;
+			}
+		  });
+		// console.log(arrayIndex + " this is the array index found")
+		hitArray[arrayIndex]['isHit'] = true;
+	};
 
 	return { shipLength, isSunk, hitArray, hit }
 };
@@ -386,9 +411,26 @@ const gameBoardFactory = () => {
 				board[xCoordinate][yCoordinate + i].hasShip = true;	
 			};
 		}
-	}
+	};
 
-	return { board, addShip };
+	const receiveAttack = (xCoordinate, yCoordinate) => {
+		if ((board[xCoordinate][yCoordinate].shipHasBeenHit === false && board[xCoordinate][yCoordinate].hitAndMiss === false)) {
+			if (board[xCoordinate][yCoordinate].hasShip === true) {
+				board[xCoordinate][yCoordinate].shipHasBeenHit = true;
+				// Call newShip.hit at this location as well
+
+			} else {
+				board[xCoordinate][yCoordinate].hitAndMiss = true;
+			};
+		} 
+		// Catch case if the spot was already targeted before.. 
+		else {
+			return false;
+		}
+	};
+
+
+	return { board, addShip, receiveAttack };
   };
 
 
