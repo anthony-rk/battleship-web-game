@@ -1,11 +1,15 @@
 import { sum } from './battleship-game-logic';
 import { shipFactory } from './battleship-game-logic';
 import { shipIsSunk } from './battleship-game-logic';
+import { gameBoardFactory } from './battleship-game-logic';
+import { addShip } from './battleship-game-logic';
 
+// Check that Jest is working
 test('TEST FOR JEST: Adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3);
 });
 
+// Ship Factory tests
 test('Creates a Ship Object with length of 5', () => {
   const newShip = shipFactory(5);
   expect(newShip.shipLength).toBe(5);
@@ -47,7 +51,30 @@ test('Sinks a Ship (length 5)', () => {
   expect(newShip.isSunk).toBe(true);
 });
 
-// test('Creates a Ship Object with length of 5', () => {
-//   const newShip = shipFactory(5);
-//   expect(newShip.shipLength).toBe(5);
-// });
+// Gameboard factory tests
+test('Creates a GameBoard Object', () => {
+  const newGameBoard = gameBoardFactory();
+  expect(newGameBoard.board['1']['1'].hasShip).toBe(false);
+});
+
+test('Places a ship of size 3 horizontally', () => {
+  const newGameBoard = gameBoardFactory();
+  newGameBoard.addShip(3, 1, 1, true);
+
+  expect(newGameBoard.board['1']['1'].hasShip).toBe(true);
+  expect(newGameBoard.board['2']['1'].hasShip).toBe(true);
+  expect(newGameBoard.board['3']['1'].hasShip).toBe(true);
+});
+
+test('Places a ship of size 3 vertically', () => {
+  const newGameBoard = gameBoardFactory();
+  newGameBoard.addShip(3, 1, 1, false);
+
+  console.log(newGameBoard.board['1']['1']);
+  console.log(newGameBoard.board['1']['2']);
+  console.log(newGameBoard.board['1']['3']);
+
+  expect(newGameBoard.board['1']['1'].hasShip).toBe(true);
+  expect(newGameBoard.board['1']['2'].hasShip).toBe(true);
+  expect(newGameBoard.board['1']['3'].hasShip).toBe(true);
+});
