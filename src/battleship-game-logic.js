@@ -3,7 +3,7 @@ const sum = (a, b) => {
 };
 
 // Ship Factory Function
-const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal) => {
+const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
 	let isSunk = false;
 	const hitArray = [];
 
@@ -39,7 +39,7 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal) => {
 		hitArray[arrayIndex]['isHit'] = true;
 	};
 
-	return { shipLength, isSunk, hitArray, hit }
+	return { shipLength, isSunk, hitArray, hit, shipID }
 };
 
 // After each hit, check if it should be sunk.
@@ -54,347 +54,420 @@ const shipIsSunk = (shipArray) => {
 
 // Gameboard Factory Function
 const gameBoardFactory = () => {
+	const shipContainerObj = {
+		'submarine': {}, 
+		'destroyer': {}, 
+		'cruiser': {},
+		'submarine': {},
+		'battleship': {},
+		'aircraft carrier': {}
+	};
+
 	const board = {
 		1: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		2: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		3: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		4: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		5: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		6: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		7: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		},
 		8: { 
 			1: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			2: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			3: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			4: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			5: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			6: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			7: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 			8: {
 				hasShip: false,
 				shipHasBeenHit: false,
-				hitAndMiss: false
+				hitAndMiss: false,
+				shipID: 'NA'
 			},
 		}
 	}
 
-	const addShip = (shipLength, xCoordinate, yCoordinate, isHorizontal) => {
-		const ship = shipFactory(shipLength);
+	const addShip = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
+		const ship = shipFactory(shipLength, xCoordinate, yCoordinate, isHorizontal, shipID);
 
 		// Place the ship on the board at the correct coordinates...
 			// Make sure it can fit, compare shipLength to the board size from starting location
@@ -403,21 +476,30 @@ const gameBoardFactory = () => {
 		if (isHorizontal === true) {
 			for (let i = 0; i < shipLength; i++) {
 				board[xCoordinate + i][yCoordinate].hasShip = true;	
+				board[xCoordinate + i][yCoordinate]['shipID'] = shipID;
 			};
-		}
-		if (isHorizontal === false) {
-			// Vertical
+		} else {
 			for (let i = 0; i < shipLength; i++) {
 				board[xCoordinate][yCoordinate + i].hasShip = true;	
+				board[xCoordinate][yCoordinate + i]['shipID'] = shipID;
 			};
 		}
+
+		shipContainerObj[shipID] = ship;
 	};
 
+	// Update the shipFactory object as well as the game board 
 	const receiveAttack = (xCoordinate, yCoordinate) => {
 		if ((board[xCoordinate][yCoordinate].shipHasBeenHit === false && board[xCoordinate][yCoordinate].hitAndMiss === false)) {
 			if (board[xCoordinate][yCoordinate].hasShip === true) {
 				board[xCoordinate][yCoordinate].shipHasBeenHit = true;
+				
 				// Call newShip.hit at this location as well
+				let shipID = board[xCoordinate][yCoordinate].shipID;
+				
+				// now use the shipID to get the ship, i.e. submarine and run hit with x and y
+				shipContainerObj[shipID].hit(xCoordinate, yCoordinate);
+
 
 			} else {
 				board[xCoordinate][yCoordinate].hitAndMiss = true;
@@ -430,7 +512,7 @@ const gameBoardFactory = () => {
 	};
 
 
-	return { board, addShip, receiveAttack };
+	return { board, addShip, receiveAttack, shipContainerObj };
   };
 
 

@@ -86,7 +86,7 @@ test('Places a ship of size 3 vertically', () => {
 
 test('Attacks a spot on the Game Board and hits a ship.', () => {
   const newGameBoard = gameBoardFactory();
-  newGameBoard.addShip(3, 1, 1, false);
+  newGameBoard.addShip(3, 1, 1, false, 'submarine');
   newGameBoard.receiveAttack(1, 1);
   
   expect(newGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
@@ -95,16 +95,23 @@ test('Attacks a spot on the Game Board and hits a ship.', () => {
 // GameBoard needs to take in the Ship Factory so that we know what ship is where..
 test('Attacks a spot on the Game Board and sinks a ship.', () => {
   const newGameBoard = gameBoardFactory();
-  const newShip = shipFactory(3);
+  newGameBoard.addShip(3, 1, 1, false, 'submarine');
 
-  newGameBoard.addShip(newShip.shipLength, 1, 1, false);
   newGameBoard.receiveAttack(1, 1);
   newGameBoard.receiveAttack(1, 2);
   newGameBoard.receiveAttack(1, 3);
   
+  // Checks the Hit data on the Game Board
   expect(newGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
   expect(newGameBoard.board['1']['2'].shipHasBeenHit).toBe(true);
   expect(newGameBoard.board['1']['3'].shipHasBeenHit).toBe(true);
-});
 
-// shipFactory.shiplength should get passed to the newgameboard.addship()
+  // Checks the Hit data on the submarine ship in the shipContainerObj object
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[0].isHit).toBe(true);
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[1].isHit).toBe(true);
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[2].isHit).toBe(true);
+  
+  newGameBoard.shipContainerObj['submarine'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['submarine'].hitArray);
+
+  expect(newGameBoard.shipContainerObj['submarine'].isSunk).toBe(true);
+});
