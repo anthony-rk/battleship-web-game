@@ -1,3 +1,5 @@
+// Code for Battleship Game
+
 const sum = (a, b) => {
 	return a + b;
 };
@@ -52,16 +54,37 @@ const shipIsSunk = (shipArray) => {
 	}
 };
 
+// Player factory
+const playerFactory = (name) => {
+	let isSunk = false;
+
+	const attack = () => {
+		let repeat = true;
+		do {
+			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
+			let randomYCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
+
+			if (board[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && board[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
+				repeat = false;
+				receiveAttack(randomXCoordinate, randomYCoordinate);
+			}
+		} while (repeat === true)
+	};
+	return { name, isSunk, attack };
+};
+
 // Gameboard Factory Function
 const gameBoardFactory = () => {
 	const shipContainerObj = {
-		'submarine': {}, 
 		'destroyer': {}, 
+		'submarine': {}, 
 		'cruiser': {},
-		'submarine': {},
 		'battleship': {},
 		'aircraft carrier': {}
 	};
+
+	const playerOne = playerFactory('Player 1');
+	const playerTwo = playerFactory('Computer');
 
 	const board = {
 		1: { 
@@ -511,8 +534,17 @@ const gameBoardFactory = () => {
 		}
 	};
 
+	// Check if the Game if Over (Only start calling once 17 turn have gone, the minimum to win)
+	const gameFinishedCheck = () => {
+		// loop through shipContainerObj to check is isSunk is true for all 5 ships
+		if ( shipContainerObj['submarine'].isSunk === true && shipContainerObj['destroyer'].isSunk === true && shipContainerObj['cruiser'].isSunk === true && shipContainerObj['battleship'].isSunk === true && shipContainerObj['aircraft carrier'].isSunk === true) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
-	return { board, addShip, receiveAttack, shipContainerObj };
+	return { board, addShip, receiveAttack, shipContainerObj, gameFinishedCheck, playerOne, playerTwo };
   };
 
 
