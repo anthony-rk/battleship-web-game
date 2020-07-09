@@ -38,10 +38,16 @@ body {
     height: 200px;
     margin: 1%;
     border: solid black 2px;
-    padding-top: 25px;
+    /* padding-top: 25px; */
     font-size: larger;
     display: inline-block;
     text-align: center;
     background-color: lightcoral;
     color: whitesmoke;
+}
+
+.game-board-square {
+    width: 12.5%;
+    height: 12.5%;
+    display: inline-block;
 }

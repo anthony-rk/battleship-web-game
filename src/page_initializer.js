@@ -24,13 +24,35 @@ const pageInitializer = () => {
     contentDiv.appendChild(player2Div);
 
     // Add Game Boards
+    
+    // Left game board
     const player1GameBoard = component('div', '', 'player1-gameboard');
     player1GameBoard.classList.add("gameboard");
     contentDiv.appendChild(player1GameBoard);
 
+    // Need to make 8x8 grid aka 2 for loops
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            let gameBoardSquare = component('div', '_');
+            gameBoardSquare.classList.add("game-board-square");
+            player1GameBoard.appendChild(gameBoardSquare);
+        }
+    };
+    
+    // Right game board
     const player2GameBoard = component('div', '', 'player2-gameboard');
     player2GameBoard.classList.add("gameboard");
     contentDiv.appendChild(player2GameBoard);
+
+    // Need to make 8x8 grid aka 2 for loops
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            let gameBoardSquare = component('div', '_');
+            gameBoardSquare.classList.add("game-board-square");
+            player2GameBoard.appendChild(gameBoardSquare);
+        }
+    };
+
 
 
     console.log("page intializer fn ran...");
