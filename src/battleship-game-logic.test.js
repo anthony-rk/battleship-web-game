@@ -193,9 +193,11 @@ test('Has 2 Players, one Human and one Computer', () => {
 test('Computer can select a random spot to strike, but not the same spot twice.', () => {
   const newGameBoard = gameBoardFactory();
   newGameBoard.playerTwo.attack();
+});
 
-  // for (let i = 1; i < 9; i++) {
-  //   console.log(newGameBoard.board[i])
-  // }
-  // expect(newGameBoard.board).toBe("Computer");
+// Tests for the Game loop
+test('Game loop get a user name on start.', () => {
+  const newGameBoard = gameBoardFactory();
+
+  expect(newGameBoard.playerOne.name).toBe("Anthony");
 });

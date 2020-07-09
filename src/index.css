@@ -1,0 +1,47 @@
+body {
+    background-color: lightslategray;
+}
+
+#content {
+    width: 100%;
+}
+
+#title {
+    /* margin: 0 auto; */
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+#github-link {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    color: lightgreen;
+}
+
+.player-name-div {
+    width: 47%;
+    height: 50px;
+    margin: 1%;
+    border: solid black 2px;
+    padding-top: 25px;
+    font-size: larger;
+    display: inline-block;
+    text-align: center;
+    background-color: lightcoral;
+    color: whitesmoke;
+}
+
+.gameboard {
+    width: 47%;
+    height: 200px;
+    margin: 1%;
+    border: solid black 2px;
+    padding-top: 25px;
+    font-size: larger;
+    display: inline-block;
+    text-align: center;
+    background-color: lightcoral;
+    color: whitesmoke;
+}
