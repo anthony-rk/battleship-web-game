@@ -1,3 +1,5 @@
+const { gameBoardFactory } = require("./battleship-game-logic");
+
 // Initializes the page upon load
 const component = (newElement, newInnerHTML, newID) => {
     const element = document.createElement(newElement);
@@ -31,24 +33,36 @@ const pageInitializer = () => {
     contentDiv.appendChild(player1GameBoard);
 
     // Need to make 8x8 grid aka 2 for loops
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            let gameBoardSquare = component('div', '_');
+    for (let i = 1; i < 9; i++) {
+        for (let j = 1; j < 9; j++) {
+            let gameBoardSquare = component('div', '_', i+'-'+j);
             gameBoardSquare.classList.add("game-board-square");
+
+            // add onclicks
+            gameBoardSquare.addEventListener('click', function() {
+                console.log("Hello" + ' ' + gameBoardSquare.id);
+                // gameBoard1.receiveAttack(i, j);
+            })
             player1GameBoard.appendChild(gameBoardSquare);
         }
     };
-    
+
     // Right game board
     const player2GameBoard = component('div', '', 'player2-gameboard');
     player2GameBoard.classList.add("gameboard");
     contentDiv.appendChild(player2GameBoard);
 
     // Need to make 8x8 grid aka 2 for loops
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            let gameBoardSquare = component('div', '_');
+    for (let i = 1; i < 9; i++) {
+        for (let j = 1; j < 9; j++) {
+            let gameBoardSquare = component('div', '_', i+'-'+j);
             gameBoardSquare.classList.add("game-board-square");
+
+            // add onclicks
+            gameBoardSquare.addEventListener('click', function() {
+                console.log("Hello" + ' ' + gameBoardSquare.id);
+                // gameBoard2.receiveAttack(i, j);
+            })
             player2GameBoard.appendChild(gameBoardSquare);
         }
     };
@@ -60,5 +74,5 @@ const pageInitializer = () => {
 
 
 export {
-    pageInitializer,
+    pageInitializer
 }

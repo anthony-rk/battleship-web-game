@@ -58,7 +58,9 @@ const shipIsSunk = (shipArray) => {
 const playerFactory = (name) => {
 	let isSunk = false;
 
-	const attack = () => {
+	const attack = (xCoordinate, yCoordinate) => { receiveAttack(xCoordinate, yCoordinate) };
+
+	const computerAttack = () => {
 		let repeat = true;
 		do {
 			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
@@ -70,7 +72,8 @@ const playerFactory = (name) => {
 			}
 		} while (repeat === true)
 	};
-	return { name, isSunk, attack };
+
+	return { name, isSunk, attack, computerAttack };
 };
 
 // Gameboard Factory Function
@@ -552,5 +555,6 @@ export {
 	sum,
 	shipFactory,
 	shipIsSunk,
-	gameBoardFactory
+	gameBoardFactory,
+	playerFactory
 }

@@ -192,12 +192,33 @@ test('Has 2 Players, one Human and one Computer', () => {
 
 test('Computer can select a random spot to strike, but not the same spot twice.', () => {
   const newGameBoard = gameBoardFactory();
-  newGameBoard.playerTwo.attack();
+  newGameBoard.playerTwo.computerAttack();
 });
 
 // Tests for the Game loop
-test('Game loop get a user name on start.', () => {
+// test('Game loop get a user name on start.', () => {
+//   const newGameBoard = gameBoardFactory();
+
+//   expect(newGameBoard.playerOne.name).toBe("Anthony");
+// });
+
+test('Clicking a spot to attack on the board returns an (x, y) to update the gameBoardFactory.board object', () => {
   const newGameBoard = gameBoardFactory();
 
-  expect(newGameBoard.playerOne.name).toBe("Anthony");
+  // Mock a click at 4,4 
+  // let gameBoardSquare = component('div', '_', '4-4');
+  // gameBoardSquare.classList.add("game-board-square");
+
+  // add onclicks
+  // gameBoardSquare.addEventListener('click', function() {
+  //     receiveAttack(4, 4);
+  // })
+
+  // let boardSelection = document.getElementById('4-4');
+
+
+  // gameBoardSquare.click();
+
+  // expect(receiveAttack).toBeCalled();
+  expect(newGameBoard.board[4][4].hitAndMiss).toBe(true);
 });
