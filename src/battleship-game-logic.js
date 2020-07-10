@@ -54,10 +54,11 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 };
 
 // Player factory
-const playerFactory = (name) => {
-	let isSunk = false;
-
-	const attack = (xCoordinate, yCoordinate) => { receiveAttack(xCoordinate, yCoordinate) };
+const playerFactory = (name, enemyGameBoard) => {
+	// let isSunk = false;
+	const attack = (xCoordinate, yCoordinate) => { 
+		enemyGameBoard.receiveAttack(xCoordinate, yCoordinate);
+	};
 
 	const computerAttack = (board) => {
 		let repeat = true;
@@ -65,14 +66,14 @@ const playerFactory = (name) => {
 			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
 			let randomYCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
 
-			if (board[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && board[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
+			if (enemyGameBoard[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && enemyGameBoard[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
 				repeat = false;
 				receiveAttack(randomXCoordinate, randomYCoordinate);
 			}
 		} while (repeat === true)
 	};
 
-	return { name, isSunk, attack, computerAttack };
+	return { name, attack, computerAttack, enemyGameBoard };
 };
 
 // Gameboard Factory Function
@@ -85,8 +86,8 @@ const gameBoardFactory = () => {
 		'aircraft carrier': {}
 	};
 
-	const playerOne = playerFactory('Player 1');
-	const playerTwo = playerFactory('Computer');
+	// const playerOne = playerFactory('Player 1');
+	// const playerTwo = playerFactory('Computer');
 
 	const board = {
 		1: { 
@@ -546,14 +547,13 @@ const gameBoardFactory = () => {
 		}
 	};
 
-	return { board, addShip, receiveAttack, shipContainerObj, gameFinishedCheck, playerOne, playerTwo };
+	return { board, addShip, receiveAttack, shipContainerObj, gameFinishedCheck, };
   };
 
 
 export {
 	sum,
 	shipFactory,
-	// shipIsSunk,
 	gameBoardFactory,
 	playerFactory
 }

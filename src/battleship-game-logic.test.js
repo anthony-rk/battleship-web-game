@@ -1,6 +1,5 @@
 import { sum, playerFactory } from './battleship-game-logic';
 import { shipFactory } from './battleship-game-logic';
-// import { shipIsSunk } from './battleship-game-logic';
 import { gameBoardFactory } from './battleship-game-logic';
 
 // Check that Jest is working
@@ -57,6 +56,8 @@ test('Sinks a Ship (length 5)', () => {
 
   expect(newShip.isSunk).toBe(true);
 });
+
+
 
 // Gameboard factory tests
 test('Creates a GameBoard Object.', () => {
@@ -177,21 +178,37 @@ test('Knows when all ships have been sunk.', () => {
 
 // Tests for the Player Object
 test('Has 2 Players, one Human and one Computer', () => {
-  const newGameBoard = gameBoardFactory();
-  newGameBoard.playerOne.name = 'Anthony';
-
-  expect(newGameBoard.playerOne.name).toBe("Anthony");
-  expect(newGameBoard.playerTwo.name).toBe("Computer");
-});
-
-test('Computer can select a random spot to strike, but not the same spot twice.', () => {
   const player1Gameboard = gameBoardFactory();
-  const playerTwo = playerFactory('Computer');
+  const player2Gameboard = gameBoardFactory();
 
-  playerTwo.computerAttack(player1Gameboard.board);
+  const player1 = playerFactory('Anthony', player2Gameboard);
+  const player2 = playerFactory('Computer', player1Gameboard);
 
-  expect(true).toBe(true);
+  expect(player1.name).toBe("Anthony");
+  expect(player2.name).toBe("Computer");
 });
+
+test('Player 1 can attack Player 2\'s GameBoard', () => {
+  // const player1Gameboard = gameBoardFactory();
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(2, 1, 1, false, 'destroyer');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+  
+  player1.attack(1, 1);
+  expect(player1.enemyGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
+});
+
+
+// test('Computer can select a random spot to strike, but not the same spot twice.', () => {
+//   const player1Gameboard = gameBoardFactory();
+
+//   console.log(player1Gameboard.playerTwo);
+
+//   player1Gameboard.playerTwo.computerAttack(player1Gameboard.board['1']['1']);
+
+//   expect(true).toBe(true);
+// });
 
 
 
