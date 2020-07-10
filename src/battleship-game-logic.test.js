@@ -1,6 +1,6 @@
-import { sum } from './battleship-game-logic';
+import { sum, playerFactory } from './battleship-game-logic';
 import { shipFactory } from './battleship-game-logic';
-import { shipIsSunk } from './battleship-game-logic';
+// import { shipIsSunk } from './battleship-game-logic';
 import { gameBoardFactory } from './battleship-game-logic';
 
 // Check that Jest is working
@@ -42,7 +42,7 @@ test('Hits a ship, i.e. sets hitArray[i] to True (Length of 1)', () => {
 test('Sinks a Ship (length 1)', () => {
   const newShip = shipFactory(1, 1, 1, true);
   newShip.hit(1, 1);
-  newShip.isSunk = shipIsSunk(newShip.hitArray);
+  newShip.isSunk = newShip.shipIsSunk();
 
   expect(newShip.isSunk).toBe(true);
 });
@@ -53,7 +53,7 @@ test('Sinks a Ship (length 5)', () => {
     newShip.hit(i, 1);  
   };
 
-  newShip.isSunk = shipIsSunk(newShip.hitArray);
+  newShip.isSunk = newShip.shipIsSunk();
 
   expect(newShip.isSunk).toBe(true);
 });
@@ -133,16 +133,10 @@ test('Attacks a spot on the Game Board and sinks a ship.', () => {
   expect(newGameBoard.shipContainerObj['submarine'].hitArray[1].isHit).toBe(true);
   expect(newGameBoard.shipContainerObj['submarine'].hitArray[2].isHit).toBe(true);
   
-  newGameBoard.shipContainerObj['submarine'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['submarine'].hitArray);
-
+  newGameBoard.shipContainerObj['submarine'].isSunk = newGameBoard.shipContainerObj['submarine'].shipIsSunk();
   expect(newGameBoard.shipContainerObj['submarine'].isSunk).toBe(true);
 });
 
-//
-//
-//
-//
-//
 test('Knows when all ships have been sunk.', () => {
   const newGameBoard = gameBoardFactory();
   newGameBoard.addShip(2, 1, 1, false, 'destroyer');
@@ -153,30 +147,30 @@ test('Knows when all ships have been sunk.', () => {
 
   newGameBoard.receiveAttack(1, 1);
   newGameBoard.receiveAttack(2, 1);
-  newGameBoard.shipContainerObj['destroyer'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['destroyer'].hitArray);
+  newGameBoard.shipContainerObj['destroyer'].isSunk = newGameBoard.shipContainerObj['destroyer'].shipIsSunk();
 
   newGameBoard.receiveAttack(3, 1);
   newGameBoard.receiveAttack(4, 1);
   newGameBoard.receiveAttack(5, 1);
-  newGameBoard.shipContainerObj['submarine'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['submarine'].hitArray);
+  newGameBoard.shipContainerObj['submarine'].isSunk = newGameBoard.shipContainerObj['submarine'].shipIsSunk();
 
   newGameBoard.receiveAttack(1, 2);
   newGameBoard.receiveAttack(2, 2);
   newGameBoard.receiveAttack(3, 2);
-  newGameBoard.shipContainerObj['cruiser'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['cruiser'].hitArray);
+  newGameBoard.shipContainerObj['cruiser'].isSunk = newGameBoard.shipContainerObj['cruiser'].shipIsSunk();
 
   newGameBoard.receiveAttack(1, 3);
   newGameBoard.receiveAttack(2, 3);
   newGameBoard.receiveAttack(3, 3);
   newGameBoard.receiveAttack(4, 3);
-  newGameBoard.shipContainerObj['battleship'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['battleship'].hitArray);
+  newGameBoard.shipContainerObj['battleship'].isSunk = newGameBoard.shipContainerObj['battleship'].shipIsSunk();
 
   newGameBoard.receiveAttack(1, 4);
   newGameBoard.receiveAttack(2, 4);
   newGameBoard.receiveAttack(3, 4);
   newGameBoard.receiveAttack(4, 4);
   newGameBoard.receiveAttack(5, 4);
-  newGameBoard.shipContainerObj['aircraft carrier'].isSunk = shipIsSunk(newGameBoard.shipContainerObj['aircraft carrier'].hitArray);
+  newGameBoard.shipContainerObj['aircraft carrier'].isSunk = newGameBoard.shipContainerObj['aircraft carrier'].shipIsSunk();
   
   expect(newGameBoard.gameFinishedCheck()).toBe(true);
 });
@@ -191,34 +185,41 @@ test('Has 2 Players, one Human and one Computer', () => {
 });
 
 test('Computer can select a random spot to strike, but not the same spot twice.', () => {
-  const newGameBoard = gameBoardFactory();
-  newGameBoard.playerTwo.computerAttack();
+  const player1Gameboard = gameBoardFactory();
+  const playerTwo = playerFactory('Computer');
+
+  playerTwo.computerAttack(player1Gameboard.board);
+
+  expect(true).toBe(true);
 });
 
-// Tests for the Game loop
+
+
+// Tests for the Game loop, move this to game-flow-controller.test.js
+
 // test('Game loop get a user name on start.', () => {
 //   const newGameBoard = gameBoardFactory();
 
 //   expect(newGameBoard.playerOne.name).toBe("Anthony");
 // });
 
-test('Clicking a spot to attack on the board returns an (x, y) to update the gameBoardFactory.board object', () => {
-  const newGameBoard = gameBoardFactory();
+// test('Clicking a spot to attack on the board returns an (x, y) to update the gameBoardFactory.board object', () => {
+//   const newGameBoard = gameBoardFactory();
 
-  // Mock a click at 4,4 
-  // let gameBoardSquare = component('div', '_', '4-4');
-  // gameBoardSquare.classList.add("game-board-square");
+//   // Mock a click at 4,4 
+//   // let gameBoardSquare = component('div', '_', '4-4');
+//   // gameBoardSquare.classList.add("game-board-square");
 
-  // add onclicks
-  // gameBoardSquare.addEventListener('click', function() {
-  //     receiveAttack(4, 4);
-  // })
+//   // add onclicks
+//   // gameBoardSquare.addEventListener('click', function() {
+//   //     receiveAttack(4, 4);
+//   // })
 
-  // let boardSelection = document.getElementById('4-4');
+//   // let boardSelection = document.getElementById('4-4');
 
 
-  // gameBoardSquare.click();
+//   // gameBoardSquare.click();
 
-  // expect(receiveAttack).toBeCalled();
-  expect(newGameBoard.board[4][4].hitAndMiss).toBe(true);
-});
+//   // expect(receiveAttack).toBeCalled();
+//   expect(newGameBoard.board[4][4].hitAndMiss).toBe(true);
+// });

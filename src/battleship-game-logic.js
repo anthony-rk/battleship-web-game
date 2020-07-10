@@ -1,5 +1,4 @@
 // Code for Battleship Game
-
 const sum = (a, b) => {
 	return a + b;
 };
@@ -9,6 +8,7 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	let isSunk = false;
 	const hitArray = [];
 
+	// Fill the hitArray with each location the ship is 
 	if (isHorizontal === true) {
 		for (let i = 0; i < shipLength; i++) {
 			let hitObj = {
@@ -37,21 +37,20 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 			  return true;
 			}
 		  });
-		// console.log(arrayIndex + " this is the array index found")
 		hitArray[arrayIndex]['isHit'] = true;
 	};
 
-	return { shipLength, isSunk, hitArray, hit, shipID }
-};
+	// After each hit, check if it should be sunk.
+	const shipIsSunk = () => {
+		// check if hitArray is ALL true, is so, ship isSunk = true;
+		if (hitArray.includes(false)) {
+			return false;
+		} else { 
+			return true;
+		}
+	};
 
-// After each hit, check if it should be sunk.
-const shipIsSunk = (shipArray) => {
-	// check if hitArray is ALL true, is so, ship isSunk = true;
-	if (shipArray.includes(false)) {
-		return false;
-	} else { 
-		return true;
-	}
+	return { shipLength, isSunk, hitArray, hit, shipID, shipIsSunk }
 };
 
 // Player factory
@@ -60,7 +59,7 @@ const playerFactory = (name) => {
 
 	const attack = (xCoordinate, yCoordinate) => { receiveAttack(xCoordinate, yCoordinate) };
 
-	const computerAttack = () => {
+	const computerAttack = (board) => {
 		let repeat = true;
 		do {
 			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
@@ -554,7 +553,7 @@ const gameBoardFactory = () => {
 export {
 	sum,
 	shipFactory,
-	shipIsSunk,
+	// shipIsSunk,
 	gameBoardFactory,
 	playerFactory
 }
