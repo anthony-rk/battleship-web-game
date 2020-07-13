@@ -65,8 +65,8 @@ const playerFactory = (name, enemyGameBoard) => {
 	const computerAttack = () => {
 		let repeat = true;
 		do {
-			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
-			let randomYCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
+			let randomXCoordinate = Math.floor(Math.random() * (9 - 1)) + 1;
+			let randomYCoordinate = Math.floor(Math.random() * (9 - 1)) + 1;
 
 			if (enemyGameBoard.board[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && enemyGameBoard.board[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
 				repeat = false;
