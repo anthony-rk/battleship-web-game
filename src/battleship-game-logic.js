@@ -526,6 +526,9 @@ const gameBoardFactory = () => {
 				// now use the shipID to get the ship, i.e. submarine and run hit with x and y
 				shipContainerObj[shipID].hit(xCoordinate, yCoordinate);
 
+				// Add a check to see if the ship is sunk
+				shipContainerObj[shipID].isSunk = shipContainerObj[shipID].shipIsSunk();
+
 
 			} else {
 				board[xCoordinate][yCoordinate].hitAndMiss = true;

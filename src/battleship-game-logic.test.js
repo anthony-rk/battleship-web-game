@@ -176,6 +176,41 @@ test('Knows when all ships have been sunk.', () => {
   expect(newGameBoard.gameFinishedCheck()).toBe(true);
 });
 
+test('Knows when all ships have been sunk from another player attacking the gameboard', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(2, 1, 1, false, 'destroyer');
+  player2Gameboard.addShip(3, 3, 1, false, 'submarine');
+  player2Gameboard.addShip(3, 1, 2, false, 'cruiser');
+  player2Gameboard.addShip(4, 1, 3, false, 'battleship');
+  player2Gameboard.addShip(5, 1, 4, false, 'aircraft carrier');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+  
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  player1.attack(1, 2);
+  player1.attack(2, 2);
+  player1.attack(3, 2);
+
+  player1.attack(1, 3);
+  player1.attack(2, 3);
+  player1.attack(3, 3);
+  player1.attack(4, 3);
+
+  player1.attack(1, 4);
+  player1.attack(2, 4);
+  player1.attack(3, 4);
+  player1.attack(4, 4);
+  player1.attack(5, 4);
+  
+  expect(player2Gameboard.gameFinishedCheck()).toBe(true);
+});
+
 // Tests for the Player Object
 test('Has 2 Players, one Human and one Computer', () => {
   const player1Gameboard = gameBoardFactory();
