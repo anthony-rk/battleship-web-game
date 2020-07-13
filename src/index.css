@@ -20,6 +20,17 @@ body {
     color: lightgreen;
 }
 
+#start-button-div {
+    text-align: center;
+    width: 100%;
+}
+
+#start-button {
+    width: 150px;
+    height: 30px;
+    background-color: burlywood;
+}
+
 .player-name-div {
     width: 47%;
     height: 50px;

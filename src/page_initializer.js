@@ -1,4 +1,5 @@
 const { gameBoardFactory } = require("./battleship-game-logic");
+const { gameFlowController } = require("./game-flow-controller");
 
 // Initializes the page upon load
 const component = (newElement, newInnerHTML, newID) => {
@@ -15,6 +16,19 @@ const pageInitializer = () => {
     let contentDiv = document.getElementById('content-div');
     contentDiv.appendChild(component('h1', 'Battleship!', 'title'));
     contentDiv.appendChild(component('h3', 'GitHub Link: https://github.com/anthony-rk/battleship-web-game', 'github-link'));
+
+    // Add Start Button
+    contentDiv.appendChild(component('div', '', 'start-button-div'));
+    const startButtonDiv = document.getElementById('start-button-div');
+    const startButton = component('button', 'Start!', 'start-button')
+    startButton.addEventListener('click', () => {
+        // Remove the console.log()
+        console.log('start clicked');
+        gameFlowController();
+
+    })
+    startButtonDiv.appendChild(startButton);
+
 
     // Add Player divs
     const player1Div = component('div', 'Player 1');
