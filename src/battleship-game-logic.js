@@ -60,15 +60,15 @@ const playerFactory = (name, enemyGameBoard) => {
 		enemyGameBoard.receiveAttack(xCoordinate, yCoordinate);
 	};
 
-	const computerAttack = (board) => {
+	const computerAttack = () => {
 		let repeat = true;
 		do {
 			let randomXCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
 			let randomYCoordinate = Math.floor(Math.random() * (8 - 1)) + 1;
 
-			if (enemyGameBoard[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && enemyGameBoard[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
+			if (enemyGameBoard.board[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && enemyGameBoard.board[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
 				repeat = false;
-				receiveAttack(randomXCoordinate, randomYCoordinate);
+				enemyGameBoard.receiveAttack(randomXCoordinate, randomYCoordinate);
 			}
 		} while (repeat === true)
 	};

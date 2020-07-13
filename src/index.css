@@ -62,3 +62,11 @@ body {
     height: 12.5%;
     display: inline-block;
 }
+
+.ship-has-been-hit {
+    background-color: green;
+}
+
+.hit-and-miss {
+    background-color: black;
+}
