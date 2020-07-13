@@ -6,7 +6,7 @@ const sum = (a, b) => {
 // Ship Factory Function
 const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
 	let isSunk = false;
-	const hitArray = [];
+	let hitArray = [];
 
 	// Fill the hitArray with each location the ship is 
 	if (isHorizontal === true) {
@@ -43,11 +43,14 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	// After each hit, check if it should be sunk.
 	const shipIsSunk = () => {
 		// check if hitArray is ALL true, is so, ship isSunk = true;
-		if (hitArray.includes(false)) {
-			return false;
-		} else { 
-			return true;
+		let checkIfSunk = false;
+		for (let i = 0; i < hitArray.length; i++) {
+			if (hitArray[i].isHit === false) { 
+				return false;
+			}
+			else checkIfSunk = true;
 		}
+		return checkIfSunk;
 	};
 
 	return { shipLength, isSunk, hitArray, hit, shipID, shipIsSunk }
@@ -55,7 +58,6 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 
 // Player factory
 const playerFactory = (name, enemyGameBoard) => {
-	// let isSunk = false;
 	const attack = (xCoordinate, yCoordinate) => { 
 		enemyGameBoard.receiveAttack(xCoordinate, yCoordinate);
 	};
@@ -85,9 +87,6 @@ const gameBoardFactory = () => {
 		'battleship': {},
 		'aircraft carrier': {}
 	};
-
-	// const playerOne = playerFactory('Player 1');
-	// const playerTwo = playerFactory('Computer');
 
 	const board = {
 		1: { 
@@ -516,28 +515,22 @@ const gameBoardFactory = () => {
 
 	// Update the shipFactory object as well as the game board 
 	const receiveAttack = (xCoordinate, yCoordinate) => {
-		if ((board[xCoordinate][yCoordinate].shipHasBeenHit === false && board[xCoordinate][yCoordinate].hitAndMiss === false)) {
-			if (board[xCoordinate][yCoordinate].hasShip === true) {
-				board[xCoordinate][yCoordinate].shipHasBeenHit = true;
-				
-				// Call newShip.hit at this location as well
-				let shipID = board[xCoordinate][yCoordinate].shipID;
-				
-				// now use the shipID to get the ship, i.e. submarine and run hit with x and y
-				shipContainerObj[shipID].hit(xCoordinate, yCoordinate);
+		if (board[xCoordinate][yCoordinate].hasShip === true) {
+			board[xCoordinate][yCoordinate].shipHasBeenHit = true;
+			
+			// Call newShip.hit at this location as well
+			let shipID = board[xCoordinate][yCoordinate].shipID;
+			
+			// now use the shipID to get the ship, i.e. submarine and run hit with x and y
+			shipContainerObj[shipID].hit(xCoordinate, yCoordinate);
 
-				// Add a check to see if the ship is sunk
-				shipContainerObj[shipID].isSunk = shipContainerObj[shipID].shipIsSunk();
+			// Add a check to see if the ship is sunk
+			shipContainerObj[shipID].isSunk = shipContainerObj[shipID].shipIsSunk();
 
 
-			} else {
-				board[xCoordinate][yCoordinate].hitAndMiss = true;
-			};
-		} 
-		// Catch case if the spot was already targeted before.. 
-		else {
-			return false;
-		}
+		} else {
+			board[xCoordinate][yCoordinate].hitAndMiss = true;
+		};
 	};
 
 	// Check if the Game if Over (Only start calling once 17 turn have gone, the minimum to win)

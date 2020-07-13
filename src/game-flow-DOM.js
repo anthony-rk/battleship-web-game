@@ -8,17 +8,24 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
             
             gameBoardSquare.addEventListener('click', () => {
                 if (player2GameBoard.board[i][j].hitAndMiss === false && player2GameBoard.board[i][j].shipHasBeenHit === false) {
-                    player1.attack(i, j);
-                    console.log(player2GameBoard);
-                    updateBoardDisplay(player2GameBoard, 'computer')
-    
-                    // Run computer attack here
-                    player2.computerAttack()
-                    updateBoardDisplay(player1GameBoard, 'player1')
+                        player1.attack(i, j);
+                        updateBoardDisplay(player2GameBoard, 'computer');
+        
+                        // Run computer attack here
+                        player2.computerAttack();
+                        updateBoardDisplay(player1GameBoard, 'player1');
+                }
+                // Run game over check
+                if (player2GameBoard.gameFinishedCheck() === true) {
+                    console.log('GAME OVER, PLAYER 1 HAS WON!!');
+                    console.log(player2GameBoard)
+                } else if (player1GameBoard.gameFinishedCheck() === true) {
+                    console.log('GAME OVER, COMPUTER HAS WON!!')
+                    console.log(player1GameBoard)
                 }
             })
         }
-    };
+    }
 };
 
 // This will run after each attack on a board

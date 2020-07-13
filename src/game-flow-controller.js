@@ -38,20 +38,6 @@ const gameFlowController = () => {
     // Add onclicks to the gameboard
     addOnclicks(player1, player2Gameboard, player2, player1Gameboard);
 
-
-    // Make the turn attack loop until game over
-        // each loop, player1 will attack, then computer will attack. Do this while the gameFinishedCheck() is false
-    // do { 
-    //     // Wait for player one to attack, then update board display and have computer attack
-    //     // need onclick listener for each board slot
-
-    // } while (player1Gameboard.gameFinishedCheck() === false || player2Gameboard.gameFinishedCheck() === false)
-
-    
-        // Player 1 should attack first
-
-        // Player 2 (Computer) attacks next
-
 };
 
 export {
