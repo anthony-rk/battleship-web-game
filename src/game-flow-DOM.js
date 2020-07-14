@@ -48,12 +48,14 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
                 // Run game over check
                 if (player2GameBoard.gameFinishedCheck() === true) {
                     console.log('GAME OVER, PLAYER 1 HAS WON!!');
+                    alert('GAME OVER, PLAYER 1 HAS WON!!');
                     console.log(player2GameBoard);
-                    resetGameBoards();
+                    setTimeout(function(){ resetGameBoards(); }, 1000);
                 } else if (player1GameBoard.gameFinishedCheck() === true) {
                     console.log('GAME OVER, COMPUTER HAS WON!!')
+                    alert('GAME OVER, COMPUTER HAS WON!!')
                     console.log(player1GameBoard);
-                    resetGameBoards();
+                    setTimeout(function(){ resetGameBoards(); }, 1000);
                 }
             });
 
