@@ -1,5 +1,35 @@
 // Code for DOM Manipulation
 
+const resetGameBoards = () => {
+    // Left Board, Player 1
+    for (let i = 1; i < 9; i++) {
+        for (let j = 1; j < 9; j++) {
+            let gameBoardSquare = document.getElementById(i+'-player1-'+j);
+
+            if (gameBoardSquare.classList.contains('ship-has-been-hit')) {
+                gameBoardSquare.classList.remove('ship-has-been-hit');
+            }
+            if (gameBoardSquare.classList.contains('hit-and-miss')) {
+                gameBoardSquare.classList.remove('hit-and-miss');
+            }
+        }
+    }
+
+    // Right Board, Player 2 (Computer)
+    for (let i = 1; i < 9; i++) {
+        for (let j = 1; j < 9; j++) {
+            let gameBoardSquare = document.getElementById(i+'-computer-'+j);
+
+            if (gameBoardSquare.classList.contains('ship-has-been-hit')) {
+                gameBoardSquare.classList.remove('ship-has-been-hit');
+            }
+            if (gameBoardSquare.classList.contains('hit-and-miss')) {
+                gameBoardSquare.classList.remove('hit-and-miss');
+            }
+        }
+    }
+};
+
 const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
     // Add onclick for each spot on the game board
     for (let i = 1; i < 9; i++) {
@@ -18,12 +48,15 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
                 // Run game over check
                 if (player2GameBoard.gameFinishedCheck() === true) {
                     console.log('GAME OVER, PLAYER 1 HAS WON!!');
-                    console.log(player2GameBoard)
+                    console.log(player2GameBoard);
+                    resetGameBoards();
                 } else if (player1GameBoard.gameFinishedCheck() === true) {
                     console.log('GAME OVER, COMPUTER HAS WON!!')
-                    console.log(player1GameBoard)
+                    console.log(player1GameBoard);
+                    resetGameBoards();
                 }
-            })
+            });
+
         }
     }
 };
@@ -38,6 +71,8 @@ const updateBoardDisplay = (gameBoard, playerName) => {
                 gameBoardSquare.classList.add('ship-has-been-hit');
             } else if (gameBoard.board[i][j].hitAndMiss === true) {
                 gameBoardSquare.classList.add('hit-and-miss');
+            } else {
+                gameBoardSquare.classList.add('game-board-square');
             }
         }
     }
@@ -45,5 +80,5 @@ const updateBoardDisplay = (gameBoard, playerName) => {
 
 export {
     addOnclicks,
-    updateBoardDisplay,
+    resetGameBoards
 }

@@ -1,6 +1,6 @@
 // Code for controlling the flow of the game. 
 import { playerFactory, gameBoardFactory } from './battleship-game-logic';
-import { addOnclicks, updateBoardDisplay } from './game-flow-DOM';
+import { addOnclicks, resetGameBoards } from './game-flow-DOM';
 
 
 const setUpPlayerName = () => {
@@ -9,8 +9,11 @@ const setUpPlayerName = () => {
 };
 
 const gameFlowController = () => {
-
     // Run when START button clicked
+
+    // Reset the board in case it is a second round
+    resetGameBoards();
+
     // Set up Game Boards
     const player1Gameboard = gameBoardFactory();
     const player2Gameboard = gameBoardFactory();
