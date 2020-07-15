@@ -57,8 +57,6 @@ test('Sinks a Ship (length 5)', () => {
   expect(newShip.isSunk).toBe(true);
 });
 
-
-
 // Gameboard factory tests
 test('Creates a GameBoard Object.', () => {
   const newGameBoard = gameBoardFactory();
@@ -139,41 +137,38 @@ test('Attacks a spot on the Game Board and sinks a ship.', () => {
 });
 
 test('Knows when all ships have been sunk.', () => {
-  const newGameBoard = gameBoardFactory();
-  newGameBoard.addShip(2, 1, 1, false, 'destroyer');
-  newGameBoard.addShip(3, 3, 1, false, 'submarine');
-  newGameBoard.addShip(3, 1, 2, false, 'cruiser');
-  newGameBoard.addShip(4, 1, 3, false, 'battleship');
-  newGameBoard.addShip(5, 1, 4, false, 'aircraft carrier');
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(2, 1, 1, true, 'destroyer');
+  player2Gameboard.addShip(3, 3, 1, true, 'submarine');
+  player2Gameboard.addShip(3, 1, 2, true, 'cruiser');
+  player2Gameboard.addShip(4, 1, 3, true, 'battleship');
+  player2Gameboard.addShip(5, 1, 4, true, 'aircraft carrier');
 
-  newGameBoard.receiveAttack(1, 1);
-  newGameBoard.receiveAttack(2, 1);
-  newGameBoard.shipContainerObj['destroyer'].isSunk = newGameBoard.shipContainerObj['destroyer'].shipIsSunk();
-
-  newGameBoard.receiveAttack(3, 1);
-  newGameBoard.receiveAttack(4, 1);
-  newGameBoard.receiveAttack(5, 1);
-  newGameBoard.shipContainerObj['submarine'].isSunk = newGameBoard.shipContainerObj['submarine'].shipIsSunk();
-
-  newGameBoard.receiveAttack(1, 2);
-  newGameBoard.receiveAttack(2, 2);
-  newGameBoard.receiveAttack(3, 2);
-  newGameBoard.shipContainerObj['cruiser'].isSunk = newGameBoard.shipContainerObj['cruiser'].shipIsSunk();
-
-  newGameBoard.receiveAttack(1, 3);
-  newGameBoard.receiveAttack(2, 3);
-  newGameBoard.receiveAttack(3, 3);
-  newGameBoard.receiveAttack(4, 3);
-  newGameBoard.shipContainerObj['battleship'].isSunk = newGameBoard.shipContainerObj['battleship'].shipIsSunk();
-
-  newGameBoard.receiveAttack(1, 4);
-  newGameBoard.receiveAttack(2, 4);
-  newGameBoard.receiveAttack(3, 4);
-  newGameBoard.receiveAttack(4, 4);
-  newGameBoard.receiveAttack(5, 4);
-  newGameBoard.shipContainerObj['aircraft carrier'].isSunk = newGameBoard.shipContainerObj['aircraft carrier'].shipIsSunk();
+  const player1 = playerFactory('Anthony', player2Gameboard);
   
-  expect(newGameBoard.gameFinishedCheck()).toBe(true);
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  player1.attack(1, 2);
+  player1.attack(2, 2);
+  player1.attack(3, 2);
+
+  player1.attack(1, 3);
+  player1.attack(2, 3);
+  player1.attack(3, 3);
+  player1.attack(4, 3);
+
+  player1.attack(1, 4);
+  player1.attack(2, 4);
+  player1.attack(3, 4);
+  player1.attack(4, 4);
+  player1.attack(5, 4);
+  
+  expect(player2Gameboard.gameFinishedCheck()).toBe(true);
 });
 
 test('Knows when all ships have been sunk from another player attacking the gameboard', () => {
@@ -234,45 +229,3 @@ test('Player 1 can attack Player 2\'s GameBoard', () => {
   player1.attack(1, 1);
   expect(player1.enemyGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
 });
-
-
-// test('Computer can select a random spot to strike, but not the same spot twice.', () => {
-//   const player1Gameboard = gameBoardFactory();
-
-//   console.log(player1Gameboard.playerTwo);
-
-//   player1Gameboard.playerTwo.computerAttack(player1Gameboard.board['1']['1']);
-
-//   expect(true).toBe(true);
-// });
-
-
-
-// Tests for the Game loop, move this to game-flow-controller.test.js
-
-// test('Game loop get a user name on start.', () => {
-//   const newGameBoard = gameBoardFactory();
-
-//   expect(newGameBoard.playerOne.name).toBe("Anthony");
-// });
-
-// test('Clicking a spot to attack on the board returns an (x, y) to update the gameBoardFactory.board object', () => {
-//   const newGameBoard = gameBoardFactory();
-
-//   // Mock a click at 4,4 
-//   // let gameBoardSquare = component('div', '_', '4-4');
-//   // gameBoardSquare.classList.add("game-board-square");
-
-//   // add onclicks
-//   // gameBoardSquare.addEventListener('click', function() {
-//   //     receiveAttack(4, 4);
-//   // })
-
-//   // let boardSelection = document.getElementById('4-4');
-
-
-//   // gameBoardSquare.click();
-
-//   // expect(receiveAttack).toBeCalled();
-//   expect(newGameBoard.board[4][4].hitAndMiss).toBe(true);
-// });
