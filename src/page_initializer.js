@@ -12,10 +12,18 @@ const component = (newElement, newInnerHTML, newID) => {
 
 const pageInitializer = () => {
     // Add Title / Header info
-    document.body.appendChild(component('div', '', 'content-div'));
     let contentDiv = document.getElementById('content-div');
     contentDiv.appendChild(component('h1', 'Battleship!', 'title'));
-    contentDiv.appendChild(component('h3', 'GitHub Link: https://github.com/anthony-rk/battleship-web-game', 'github-link'));
+
+    // Set up GitHub Link
+    let gitHubLink = component('div', '', 'github-link');
+    contentDiv.appendChild(gitHubLink);
+                
+    let a = document.createElement('a');  
+    let link = document.createTextNode("GitHub Link"); 
+    a.appendChild(link);                 
+    a.href = "https://github.com/anthony-rk/battleship-web-game";  
+    gitHubLink.appendChild(a); 
 
     // Add Start Button
     contentDiv.appendChild(component('div', '', 'start-button-div'));
@@ -81,7 +89,6 @@ const pageInitializer = () => {
             player2GameBoard.appendChild(gameBoardSquare);
         }
     };
-
 
 
     console.log("page intializer fn ran...");
