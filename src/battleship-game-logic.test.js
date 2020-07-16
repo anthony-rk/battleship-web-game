@@ -21,15 +21,15 @@ test('Creates a Ship Object with length of 3', () => {
 test('Hits a ship, i.e. sets hitArray[i] to True', () => {
   const newShip = shipFactory(3, 1, 1, true);
   newShip.hit(1, 1);
-
+  
   expect(newShip.hitArray[0]['isHit']).toBe(true);
 });
 
 test('Hits a ship, i.e. sets hitArray[i] to True', () => {
   const newShip = shipFactory(3, 1, 1, true);
-  newShip.hit(2, 1);
+  newShip.hit(1, 3);
 
-  expect(newShip.hitArray[1]['isHit']).toBe(true);
+  expect(newShip.hitArray[2]['isHit']).toBe(true);
 });
 
 test('Hits a ship, i.e. sets hitArray[i] to True (Length of 1)', () => {
@@ -49,7 +49,7 @@ test('Sinks a Ship (length 1)', () => {
 test('Sinks a Ship (length 5)', () => {
   const newShip = shipFactory(5, 1, 1, true);
   for (let i = 1; i <= newShip.shipLength; i++) {
-    newShip.hit(i, 1);  
+    newShip.hit(1, i);  
   };
 
   newShip.isSunk = newShip.shipIsSunk();
@@ -65,11 +65,11 @@ test('Creates a GameBoard Object.', () => {
 
 test('Places a ship of size 3 horizontally.', () => {
   const newGameBoard = gameBoardFactory();
-  newGameBoard.addShip(3, 1, 1, true);
+  newGameBoard.addShip(3, 1, 1, true, 'cruiser');
 
   expect(newGameBoard.board['1']['1'].hasShip).toBe(true);
-  expect(newGameBoard.board['2']['1'].hasShip).toBe(true);
-  expect(newGameBoard.board['3']['1'].hasShip).toBe(true);
+  expect(newGameBoard.board['1']['2'].hasShip).toBe(true);
+  expect(newGameBoard.board['1']['3'].hasShip).toBe(true);
 });
 
 test('Places a ship of size 3 vertically.', () => {
@@ -77,8 +77,8 @@ test('Places a ship of size 3 vertically.', () => {
   newGameBoard.addShip(3, 1, 1, false);
 
   expect(newGameBoard.board['1']['1'].hasShip).toBe(true);
-  expect(newGameBoard.board['1']['2'].hasShip).toBe(true);
-  expect(newGameBoard.board['1']['3'].hasShip).toBe(true);
+  expect(newGameBoard.board['2']['1'].hasShip).toBe(true);
+  expect(newGameBoard.board['3']['1'].hasShip).toBe(true);
 });
 
 test('Creates a GameBoard Object with 5 ships.', () => {
@@ -119,13 +119,13 @@ test('Attacks a spot on the Game Board and sinks a ship.', () => {
   newGameBoard.addShip(3, 1, 1, false, 'submarine');
 
   newGameBoard.receiveAttack(1, 1);
-  newGameBoard.receiveAttack(1, 2);
-  newGameBoard.receiveAttack(1, 3);
+  newGameBoard.receiveAttack(2, 1);
+  newGameBoard.receiveAttack(3, 1);
   
   // Checks the Hit data on the Game Board
   expect(newGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
-  expect(newGameBoard.board['1']['2'].shipHasBeenHit).toBe(true);
-  expect(newGameBoard.board['1']['3'].shipHasBeenHit).toBe(true);
+  expect(newGameBoard.board['2']['1'].shipHasBeenHit).toBe(true);
+  expect(newGameBoard.board['3']['1'].shipHasBeenHit).toBe(true);
 
   // Checks the Hit data on the submarine ship in the shipContainerObj object
   expect(newGameBoard.shipContainerObj['submarine'].hitArray[0].isHit).toBe(true);
@@ -136,72 +136,317 @@ test('Attacks a spot on the Game Board and sinks a ship.', () => {
   expect(newGameBoard.shipContainerObj['submarine'].isSunk).toBe(true);
 });
 
-test('Knows when all ships have been sunk.', () => {
+test('Attacks a spot on the Game Board and sinks a ship via player.attack() method.', () => {
+  const newGameBoard = gameBoardFactory();
+  newGameBoard.addShip(3, 1, 1, false, 'submarine');
+
+  const player1 = playerFactory('Anthony', newGameBoard);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  
+  // Checks the Hit data on the Game Board
+  expect(newGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
+  expect(newGameBoard.board['2']['1'].shipHasBeenHit).toBe(true);
+  expect(newGameBoard.board['3']['1'].shipHasBeenHit).toBe(true);
+
+  // Checks the Hit data on the submarine ship in the shipContainerObj object
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[0].isHit).toBe(true);
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[1].isHit).toBe(true);
+  expect(newGameBoard.shipContainerObj['submarine'].hitArray[2].isHit).toBe(true);
+  
+  newGameBoard.shipContainerObj['submarine'].isSunk = newGameBoard.shipContainerObj['submarine'].shipIsSunk();
+  expect(newGameBoard.shipContainerObj['submarine'].isSunk).toBe(true);
+});
+
+test('Knows when Destroyer ship has been sunk.', () => {
   const player2Gameboard = gameBoardFactory();
-  player2Gameboard.addShip(2, 1, 1, true, 'destroyer');
-  player2Gameboard.addShip(3, 3, 1, true, 'submarine');
-  player2Gameboard.addShip(3, 1, 2, true, 'cruiser');
-  player2Gameboard.addShip(4, 1, 3, true, 'battleship');
-  player2Gameboard.addShip(5, 1, 4, true, 'aircraft carrier');
+  player2Gameboard.addShip(2, 1, 1, false, 'destroyer');
 
   const player1 = playerFactory('Anthony', player2Gameboard);
-  
+
   player1.attack(1, 1);
   player1.attack(2, 1);
 
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('destroyer');
+
+  expect(player2Gameboard.shipContainerObj['destroyer'].isSunk).toBe(true);
+});
+
+test('Knows when Submarine ship has been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(3, 1, 1, false, 'submarine');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('submarine');
+  expect(player2Gameboard.shipContainerObj['submarine'].isSunk).toBe(true);
+});
+
+test('Knows when Cruiser ship has been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(3, 1, 1, false, 'cruiser');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.shipContainerObj['cruiser'].isSunk).toBe(true);
+});
+
+test('Knows when Battleship ship has been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(4, 1, 1, false, 'battleship');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('battleship');
+  expect(player2Gameboard.shipContainerObj['battleship'].isSunk).toBe(true);
+});
+
+test('Knows when Aircraft Carrier ship has been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(5, 1, 1, false, 'aircraft carrier');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
   player1.attack(3, 1);
   player1.attack(4, 1);
   player1.attack(5, 1);
 
-  player1.attack(1, 2);
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
+});
+
+test('Knows when 2 ships have been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(2, 2, 2, true, 'destroyer');
+  player2Gameboard.addShip(5, 1, 1, false, 'aircraft carrier');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
   player1.attack(2, 2);
-  player1.attack(3, 2);
-
-  player1.attack(1, 3);
   player1.attack(2, 3);
-  player1.attack(3, 3);
-  player1.attack(4, 3);
+  expect(player2Gameboard.board[2][2]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.board[2][3]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.shipContainerObj['destroyer'].isSunk).toBe(true);
 
-  player1.attack(1, 4);
-  player1.attack(2, 4);
-  player1.attack(3, 4);
-  player1.attack(4, 4);
-  player1.attack(5, 4);
-  
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
+
+  console.log(player2Gameboard.shipContainerObj)
+});
+
+test('Knows when 3 ships have been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+
+  player2Gameboard.addShip(2, 2, 2, true, 'destroyer');
+  player2Gameboard.addShip(5, 1, 1, false, 'aircraft carrier');
+  player2Gameboard.addShip(3, 1, 5, false, 'cruiser');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(2, 2);
+  player1.attack(2, 3);
+  expect(player2Gameboard.board[2][2]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.board[2][3]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.shipContainerObj['destroyer'].isSunk).toBe(true);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
+
+  player1.attack(1, 5);
+  player1.attack(2, 5);
+  player1.attack(3, 5);
+  expect(player2Gameboard.board[1][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[2][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[3][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.shipContainerObj['cruiser'].isSunk).toBe(true);
+});
+
+test('Knows when 4 ships have been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+
+  player2Gameboard.addShip(2, 2, 2, true, 'destroyer');
+  player2Gameboard.addShip(5, 1, 1, false, 'aircraft carrier');
+  player2Gameboard.addShip(3, 1, 5, false, 'cruiser');
+  player2Gameboard.addShip(3, 1, 6, false, 'submarine');
+
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(2, 2);
+  player1.attack(2, 3);
+  expect(player2Gameboard.board[2][2]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.board[2][3]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.shipContainerObj['destroyer'].isSunk).toBe(true);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
+
+  player1.attack(1, 5);
+  player1.attack(2, 5);
+  player1.attack(3, 5);
+  expect(player2Gameboard.board[1][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[2][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[3][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.shipContainerObj['cruiser'].isSunk).toBe(true);
+
+  player1.attack(1, 6);
+  player1.attack(2, 6);
+  player1.attack(3, 6);
+  expect(player2Gameboard.board[1][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[2][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[3][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.shipContainerObj['submarine'].isSunk).toBe(true);
+});
+
+test('Knows when all ships have been sunk.', () => {
+  const player2Gameboard = gameBoardFactory();
+  player2Gameboard.addShip(2, 2, 2, true, 'destroyer');
+  player2Gameboard.addShip(5, 1, 1, false, 'aircraft carrier');
+  player2Gameboard.addShip(3, 1, 5, false, 'cruiser');
+  player2Gameboard.addShip(3, 1, 6, false, 'submarine');
+  player2Gameboard.addShip(4, 7, 2, true, 'battleship');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  player1.attack(2, 2);
+  player1.attack(2, 3);
+  expect(player2Gameboard.board[2][2]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.board[2][3]['shipID']).toBe('destroyer');
+  expect(player2Gameboard.shipContainerObj['destroyer'].isSunk).toBe(true);
+
+  player1.attack(1, 1);
+  player1.attack(2, 1);
+  player1.attack(3, 1);
+  player1.attack(4, 1);
+  player1.attack(5, 1);
+
+  expect(player2Gameboard.board[1][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[2][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[3][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
+  expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
+
+  player1.attack(1, 5);
+  player1.attack(2, 5);
+  player1.attack(3, 5);
+  expect(player2Gameboard.board[1][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[2][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.board[3][5]['shipID']).toBe('cruiser');
+  expect(player2Gameboard.shipContainerObj['cruiser'].isSunk).toBe(true);
+
+  player1.attack(1, 6);
+  player1.attack(2, 6);
+  player1.attack(3, 6);
+  expect(player2Gameboard.board[1][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[2][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.board[3][6]['shipID']).toBe('submarine');
+  expect(player2Gameboard.shipContainerObj['submarine'].isSunk).toBe(true);
+
+  player1.attack(7, 2);
+  player1.attack(7, 3);
+  player1.attack(7, 4);
+  player1.attack(7, 5);
+  expect(player2Gameboard.board[7][2]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[7][3]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[7][4]['shipID']).toBe('battleship');
+  expect(player2Gameboard.board[7][5]['shipID']).toBe('battleship');
+  expect(player2Gameboard.shipContainerObj['battleship'].isSunk).toBe(true);
+
   expect(player2Gameboard.gameFinishedCheck()).toBe(true);
 });
 
-test('Knows when all ships have been sunk from another player attacking the gameboard', () => {
+test('Knows when all ships have been sunk. pt 2', () => {
   const player2Gameboard = gameBoardFactory();
   player2Gameboard.addShip(2, 1, 1, true, 'destroyer');
-  player2Gameboard.addShip(3, 3, 1, true, 'submarine');
-  player2Gameboard.addShip(3, 1, 2, true, 'cruiser');
-  player2Gameboard.addShip(4, 1, 3, true, 'battleship');
-  player2Gameboard.addShip(5, 1, 4, true, 'aircraft carrier');
+  player2Gameboard.addShip(3, 3, 1, false, 'submarine');
+  player2Gameboard.addShip(3, 1, 3, true, 'cruiser');
+  player2Gameboard.addShip(4, 5, 3, true, 'battleship');
+  player2Gameboard.addShip(5, 1, 8, false, 'aircraft carrier');
 
   const player1 = playerFactory('Anthony', player2Gameboard);
   
   player1.attack(1, 1);
-  player1.attack(2, 1);
+  player1.attack(1, 2);
 
   player1.attack(3, 1);
   player1.attack(4, 1);
   player1.attack(5, 1);
 
-  player1.attack(1, 2);
-  player1.attack(2, 2);
-  player1.attack(3, 2);
-
   player1.attack(1, 3);
-  player1.attack(2, 3);
-  player1.attack(3, 3);
-  player1.attack(4, 3);
-
   player1.attack(1, 4);
-  player1.attack(2, 4);
-  player1.attack(3, 4);
-  player1.attack(4, 4);
+  player1.attack(1, 5);
+
+  player1.attack(5, 3);
   player1.attack(5, 4);
+  player1.attack(5, 5);
+  player1.attack(5, 6);
+
+  player1.attack(1, 8);
+  player1.attack(2, 8);
+  player1.attack(3, 8);
+  player1.attack(4, 8);
+  player1.attack(5, 8);
   
   expect(player2Gameboard.gameFinishedCheck()).toBe(true);
 });
@@ -259,11 +504,9 @@ test('Validation for ship placement return False when the board already has a sh
 test('Validation for 5th (Last) ship placement return False when the board already has a ship in a spot', () => {
   const player1Gameboard = gameBoardFactory();
   player1Gameboard.addShip(2, 1, 1, true, 'submarine');
-  player1Gameboard.addShip(3, 1, 2, true, 'cruiser');
-  player1Gameboard.addShip(4, 1, 3, true, 'battleship');
-  player1Gameboard.addShip(5, 1, 4, true, 'aircraft carrier');
-
-  console.log(player1Gameboard.board)
+  player1Gameboard.addShip(3, 2, 2, true, 'cruiser');
+  player1Gameboard.addShip(4, 3, 3, true, 'battleship');
+  player1Gameboard.addShip(5, 4, 2, true, 'aircraft carrier');
 
   let validatorResult = shipValidator(player1Gameboard, 2, 4, 4, false, 'destroyer');
   

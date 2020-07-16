@@ -1,10 +1,13 @@
-// Code for Battleship Game
+// Code for Battleship Game //
 const sum = (a, b) => {
 	return a + b;
 };
 
-// Ship Factory Function
-const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
+   // Ship Factory Function // 
+  //					   //
+ //						  //
+// Ship Factory Function //
+const shipFactory = (shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
 	let isSunk = false;
 	let hitArray = [];
 
@@ -12,8 +15,8 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	if (isHorizontal === true) {
 		for (let i = 0; i < shipLength; i++) {
 			let hitObj = {
-				x: xCoordinate + i,
 				y: yCoordinate,
+				x: xCoordinate + i,
 				isHit: false
 			}
 			hitArray.push(hitObj);
@@ -21,8 +24,8 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	} else {
 		for (let i = 0; i < shipLength; i++) {
 			let hitObj = {
-				x: xCoordinate,
 				y: yCoordinate + i,
+				x: xCoordinate,
 				isHit: false
 			}
 			hitArray.push(hitObj);
@@ -30,10 +33,10 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	}
 	
 	// Call this when the Game Board is hit on a spot that hasShip === true
-	const hit = (xCoordinate, yCoordinate) => {
+	const hit = (yCoordinate, xCoordinate) => {
 		// find the spot in hitArray, set isHit to TRUE
 		let arrayIndex = hitArray.findIndex((element) => {
-			if (element.x === xCoordinate && element.y === yCoordinate) {
+			if (element.y === yCoordinate && element.x === xCoordinate) {
 			  return true;
 			}
 		  });
@@ -56,10 +59,14 @@ const shipFactory = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID)
 	return { shipLength, isSunk, hitArray, hit, shipID, shipIsSunk }
 };
 
-// Player factory
+
+   // Player factory // 
+  //                //
+ //                //
+// Player factory // 
 const playerFactory = (name, enemyGameBoard) => {
-	const attack = (xCoordinate, yCoordinate) => { 
-		enemyGameBoard.receiveAttack(xCoordinate, yCoordinate);
+	const attack = (yCoordinate, xCoordinate) => { 
+		enemyGameBoard.receiveAttack(yCoordinate, xCoordinate);
 	};
 
 	const computerAttack = () => {
@@ -68,9 +75,9 @@ const playerFactory = (name, enemyGameBoard) => {
 			let randomXCoordinate = Math.floor(Math.random() * (9 - 1)) + 1;
 			let randomYCoordinate = Math.floor(Math.random() * (9 - 1)) + 1;
 
-			if (enemyGameBoard.board[randomXCoordinate][randomYCoordinate].shipHasBeenHit === false && enemyGameBoard.board[randomXCoordinate][randomYCoordinate].hitAndMiss === false) {
+			if (enemyGameBoard.board[randomYCoordinate][randomXCoordinate].shipHasBeenHit === false && enemyGameBoard.board[randomYCoordinate][randomXCoordinate].hitAndMiss === false) {
 				repeat = false;
-				enemyGameBoard.receiveAttack(randomXCoordinate, randomYCoordinate);
+				enemyGameBoard.receiveAttack(randomYCoordinate, randomXCoordinate);
 			}
 		} while (repeat === true)
 	};
@@ -491,8 +498,8 @@ const gameBoardFactory = () => {
 		}
 	}
 
-	const addShip = (shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
-		const ship = shipFactory(shipLength, xCoordinate, yCoordinate, isHorizontal, shipID);
+	const addShip = (shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
+		const ship = shipFactory(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
 
 		// Place the ship on the board at the correct coordinates...
 			// Make sure it can fit, compare shipLength to the board size from starting location
@@ -500,13 +507,13 @@ const gameBoardFactory = () => {
 		// Horizontal 
 		if (isHorizontal === true) {
 			for (let i = 0; i < shipLength; i++) {
-				board[xCoordinate + i][yCoordinate].hasShip = true;	
-				board[xCoordinate + i][yCoordinate]['shipID'] = shipID;
+				board[yCoordinate][xCoordinate + i].hasShip = true;	
+				board[yCoordinate][xCoordinate + i]['shipID'] = shipID;
 			};
 		} else {
 			for (let i = 0; i < shipLength; i++) {
-				board[xCoordinate][yCoordinate + i].hasShip = true;	
-				board[xCoordinate][yCoordinate + i]['shipID'] = shipID;
+				board[yCoordinate + i][xCoordinate].hasShip = true;	
+				board[yCoordinate + i][xCoordinate]['shipID'] = shipID;
 			};
 		}
 
@@ -514,22 +521,22 @@ const gameBoardFactory = () => {
 	};
 
 	// Update the shipFactory object as well as the game board 
-	const receiveAttack = (xCoordinate, yCoordinate) => {
-		if (board[xCoordinate][yCoordinate].hasShip === true) {
-			board[xCoordinate][yCoordinate].shipHasBeenHit = true;
+	const receiveAttack = (yCoordinate, xCoordinate) => {
+		if (board[yCoordinate][xCoordinate].hasShip === true) {
+			board[yCoordinate][xCoordinate].shipHasBeenHit = true;
 			
 			// Call newShip.hit at this location as well
-			let shipID = board[xCoordinate][yCoordinate].shipID;
+			let shipID = board[yCoordinate][xCoordinate].shipID;
 			
 			// now use the shipID to get the ship, i.e. submarine and run hit with x and y
-			shipContainerObj[shipID].hit(xCoordinate, yCoordinate);
+			shipContainerObj[shipID].hit(yCoordinate, xCoordinate);
 
 			// Add a check to see if the ship is sunk
 			shipContainerObj[shipID].isSunk = shipContainerObj[shipID].shipIsSunk();
 
 
 		} else {
-			board[xCoordinate][yCoordinate].hitAndMiss = true;
+			board[yCoordinate][xCoordinate].hitAndMiss = true;
 		};
 	};
 
@@ -548,7 +555,7 @@ const gameBoardFactory = () => {
 
 
 // shipValidator(player1Gameboard, 2, 1, 1, false, 'destroyer')
-const shipValidator = (gameBoard, shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
+const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
 	let isValid = true;
 	// Check if the shipLength from xCoord and yCoord fits in the board, first step.
 	const maxX = xCoordinate + shipLength;
@@ -560,7 +567,7 @@ const shipValidator = (gameBoard, shipLength, xCoordinate, yCoordinate, isHorizo
 			isValid = false; 
 		} else {
 			for (let i = 0; i < shipLength; i++) {
-				if (gameBoard.board[xCoordinate + i][yCoordinate].hasShip === true) {
+				if (gameBoard.board[yCoordinate][xCoordinate + i].hasShip === true) {
 					isValid = false;
 				}	
 			}
@@ -572,7 +579,7 @@ const shipValidator = (gameBoard, shipLength, xCoordinate, yCoordinate, isHorizo
 			isValid = false; 
 		} else {
 			for (let i = 0; i < shipLength; i++) {
-				if (gameBoard.board[xCoordinate][yCoordinate + i].hasShip === true) {
+				if (gameBoard.board[yCoordinate + i][xCoordinate].hasShip === true) {
 					isValid = false;
 				}	
 			}
