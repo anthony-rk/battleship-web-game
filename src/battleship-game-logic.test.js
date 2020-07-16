@@ -1,6 +1,6 @@
 import { sum, playerFactory } from './battleship-game-logic';
 import { shipFactory } from './battleship-game-logic';
-import { gameBoardFactory } from './battleship-game-logic';
+import { gameBoardFactory, shipValidator } from './battleship-game-logic';
 
 // Check that Jest is working
 test('TEST FOR JEST: Adds 1 + 2 to equal 3', () => {
@@ -228,4 +228,44 @@ test('Player 1 can attack Player 2\'s GameBoard', () => {
   
   player1.attack(1, 1);
   expect(player1.enemyGameBoard.board['1']['1'].shipHasBeenHit).toBe(true);
+});
+
+// Tests for shipValidator() function
+test('Validation for ship placement return True when the board is empty and 1st ship is placed', () => {
+  const player1Gameboard = gameBoardFactory();
+
+  let validatorResult = shipValidator(player1Gameboard, 2, 1, 1, false, 'destroyer');
+    
+  expect(validatorResult).toBe(true);
+});
+
+test('Validation for ship placement return False when the board is not big enough for the ship', () => {
+  const player1Gameboard = gameBoardFactory();
+
+  let validatorResult = shipValidator(player1Gameboard, 2, 8, 8, false, 'destroyer');
+  
+  expect(validatorResult).toBe(false);
+});
+
+test('Validation for ship placement return False when the board already has a ship in a spot', () => {
+  const player1Gameboard = gameBoardFactory();
+  player1Gameboard.addShip(2, 1, 1, false, 'destroyer');
+
+  let validatorResult = shipValidator(player1Gameboard, 2, 1, 1, false, 'destroyer');
+  
+  expect(validatorResult).toBe(false);
+});
+
+test('Validation for 5th (Last) ship placement return False when the board already has a ship in a spot', () => {
+  const player1Gameboard = gameBoardFactory();
+  player1Gameboard.addShip(2, 1, 1, true, 'submarine');
+  player1Gameboard.addShip(3, 1, 2, true, 'cruiser');
+  player1Gameboard.addShip(4, 1, 3, true, 'battleship');
+  player1Gameboard.addShip(5, 1, 4, true, 'aircraft carrier');
+
+  console.log(player1Gameboard.board)
+
+  let validatorResult = shipValidator(player1Gameboard, 2, 4, 4, false, 'destroyer');
+  
+  expect(validatorResult).toBe(false);
 });

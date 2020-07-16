@@ -547,9 +547,47 @@ const gameBoardFactory = () => {
   };
 
 
+// shipValidator(player1Gameboard, 2, 1, 1, false, 'destroyer')
+const shipValidator = (gameBoard, shipLength, xCoordinate, yCoordinate, isHorizontal, shipID) => {
+	let isValid = true;
+	// Check if the shipLength from xCoord and yCoord fits in the board, first step.
+	const maxX = xCoordinate + shipLength;
+	const maxY = yCoordinate + shipLength;
+	
+	// Check if any of the spots have a shipID, and whether the ship will fall off the board
+	if (isHorizontal === true) {
+		if (maxX > 8) { 
+			isValid = false; 
+		} else {
+			for (let i = 0; i < shipLength; i++) {
+				if (gameBoard.board[xCoordinate + i][yCoordinate].hasShip === true) {
+					isValid = false;
+				}	
+			}
+		}
+
+	// Case of Vertical ship placement
+	} else {
+		if (maxY > 8) {
+			isValid = false; 
+		} else {
+			for (let i = 0; i < shipLength; i++) {
+				if (gameBoard.board[xCoordinate][yCoordinate + i].hasShip === true) {
+					isValid = false;
+				}	
+			}
+		}
+	};
+
+	
+	// Check if the ship has already been placed, could be in another function or on the HTML form validation step
+	return isValid;
+};
+
 export {
 	sum,
 	shipFactory,
 	gameBoardFactory,
-	playerFactory
+	playerFactory,
+	shipValidator
 }
