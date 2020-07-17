@@ -591,10 +591,20 @@ const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizo
 	return isValid;
 };
 
+const handleFormSubmission = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
+	const isValidForm = shipValidator(gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
+
+	if (isValidForm === true) {
+		gameBoard.addShip(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
+		// console.log(gameBoard.board)
+	}
+};
+
 export {
 	sum,
 	shipFactory,
 	gameBoardFactory,
 	playerFactory,
-	shipValidator
+	shipValidator,
+	handleFormSubmission
 }

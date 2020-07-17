@@ -1,6 +1,6 @@
 import { sum, playerFactory } from './battleship-game-logic';
 import { shipFactory } from './battleship-game-logic';
-import { gameBoardFactory, shipValidator } from './battleship-game-logic';
+import { gameBoardFactory, shipValidator, handleFormSubmission } from './battleship-game-logic';
 
 // Check that Jest is working
 test('TEST FOR JEST: Adds 1 + 2 to equal 3', () => {
@@ -270,8 +270,6 @@ test('Knows when 2 ships have been sunk.', () => {
   expect(player2Gameboard.board[4][1]['shipID']).toBe('aircraft carrier');
   expect(player2Gameboard.board[5][1]['shipID']).toBe('aircraft carrier');
   expect(player2Gameboard.shipContainerObj['aircraft carrier'].isSunk).toBe(true);
-
-  console.log(player2Gameboard.shipContainerObj)
 });
 
 test('Knows when 3 ships have been sunk.', () => {
@@ -503,7 +501,7 @@ test('Validation for ship placement return False when the board already has a sh
 
 test('Validation for 5th (Last) ship placement return False when the board already has a ship in a spot', () => {
   const player1Gameboard = gameBoardFactory();
-  player1Gameboard.addShip(2, 1, 1, true, 'submarine');
+  player1Gameboard.addShip(3, 1, 1, true, 'submarine');
   player1Gameboard.addShip(3, 2, 2, true, 'cruiser');
   player1Gameboard.addShip(4, 3, 3, true, 'battleship');
   player1Gameboard.addShip(5, 4, 2, true, 'aircraft carrier');
@@ -511,4 +509,30 @@ test('Validation for 5th (Last) ship placement return False when the board alrea
   let validatorResult = shipValidator(player1Gameboard, 2, 4, 4, false, 'destroyer');
   
   expect(validatorResult).toBe(false);
+});
+
+// Tests for the form submission 
+test('Takes in a valid form entry and adds ship to the board.', () => {
+  const player1Gameboard = gameBoardFactory();
+  const player2Gameboard = gameBoardFactory();
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  handleFormSubmission(player1Gameboard, 2, 1, 1, true, 'destroyer');
+
+  expect(player1Gameboard.board[1][1]['shipID']).toBe('destroyer');
+  expect(player1Gameboard.board[1][2]['shipID']).toBe('destroyer');
+});
+
+test('Takes in a invalid form entry and does not add the ship to the board.', () => {
+  const player1Gameboard = gameBoardFactory();
+  const player2Gameboard = gameBoardFactory();
+  player1Gameboard.addShip(3, 1, 1, true, 'submarine');
+
+  const player1 = playerFactory('Anthony', player2Gameboard);
+
+  handleFormSubmission(player1Gameboard, 2, 1, 1, true, 'destroyer');
+
+  expect(player1Gameboard.board[1][1]['shipID']).toBe('submarine');
+  expect(player1Gameboard.board[1][2]['shipID']).toBe('submarine');
 });
