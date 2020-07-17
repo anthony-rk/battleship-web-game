@@ -79,7 +79,11 @@ input:invalid:required {
     background-image: linear-gradient(to right, pink, lightgreen);
 }
   
-  
 input:valid {
     border: 2px solid black;
+}
+
+#forms-div {
+    text-align: center;
+    visibility: hidden;
 }

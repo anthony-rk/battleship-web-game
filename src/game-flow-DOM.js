@@ -1,4 +1,5 @@
 // Code for DOM Manipulation
+import { handleFormSubmission } from "./battleship-game-logic";
 
 const resetGameBoards = () => {
     // Left Board, Player 1
@@ -63,6 +64,17 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
     }
 };
 
+const addOnclicksForFormSubmissions = (gameboard) => {
+    let submitDestroyerButton = document.getElementById("submit-destoyer-button");
+    let destoyerYCoordinate = document.getElementById("y-number-destroyer");
+    let destoyerXCoordinate = document.getElementById("x-number-destroyer");
+    let destoyerIsHorizontal = document.getElementById("t1-destroyer");
+
+    submitDestroyerButton.addEventListener("click", function() {
+        handleFormSubmission(gameBoard, 2, destoyerYCoordinate, destoyerXCoordinate, destoyerIsHorizontal, 'destroyer');
+    });
+};
+
 // This will run after each attack on a board
 const updateBoardDisplay = (gameBoard, playerName) => {
     for (let i = 1; i < 9; i++) {
@@ -82,5 +94,6 @@ const updateBoardDisplay = (gameBoard, playerName) => {
 
 export {
     addOnclicks,
-    resetGameBoards
+    resetGameBoards,
+    addOnclicksForFormSubmissions
 }
