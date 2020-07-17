@@ -64,7 +64,8 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
     }
 };
 
-const addOnclicksForFormSubmissions = (gameboard) => {
+// Add onclick for the Add Ship Forms to place the ships
+const addOnclicksForFormSubmissions = (gameBoard) => {
     let submitDestroyerButton = document.getElementById("submit-destoyer-button");
     let destoyerYCoordinate = document.getElementById("y-number-destroyer");
     let destoyerXCoordinate = document.getElementById("x-number-destroyer");
