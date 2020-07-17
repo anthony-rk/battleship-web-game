@@ -17,7 +17,9 @@ const gameFlowController = () => {
     const player1Gameboard = gameBoardFactory();
     const player2Gameboard = gameBoardFactory();
 
-    addOnclicksForFormSubmissions(player1Gameboard);
+    if (!!player1Gameboard) {
+        addOnclicksForFormSubmissions(player1Gameboard);
+    };
 
 
     // Set up player objects

@@ -1,5 +1,5 @@
 // Code for DOM Manipulation
-import { handleFormSubmission } from "./battleship-game-logic";
+import { handleFormSubmission, gameBoardFactory } from "./battleship-game-logic";
 
 const resetGameBoards = () => {
     // Left Board, Player 1
@@ -67,11 +67,18 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
 // Add onclick for the Add Ship Forms to place the ships
 const addOnclicksForFormSubmissions = (gameBoard) => {
     let submitDestroyerButton = document.getElementById("submit-destoyer-button");
-    let destoyerYCoordinate = document.getElementById("y-number-destroyer");
-    let destoyerXCoordinate = document.getElementById("x-number-destroyer");
-    let destoyerIsHorizontal = document.getElementById("t1-destroyer");
 
     submitDestroyerButton.addEventListener("click", function() {
+        let destoyerYCoordinate = parseInt(document.getElementById("y-number-destroyer").value);
+        let destoyerXCoordinate = parseInt(document.getElementById("x-number-destroyer").value);
+        let destoyerIsHorizontal = document.getElementById("t1-destroyer").value;
+
+        if (destoyerIsHorizontal === 'Horizontal') {
+            destoyerIsHorizontal = true;
+        } else {
+            destoyerIsHorizontal = false;
+        }
+
         handleFormSubmission(gameBoard, 2, destoyerYCoordinate, destoyerXCoordinate, destoyerIsHorizontal, 'destroyer');
     });
 };
