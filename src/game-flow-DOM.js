@@ -67,20 +67,86 @@ const addOnclicks = (player1, player2GameBoard, player2, player1GameBoard) => {
 // Add onclick for the Add Ship Forms to place the ships
 const addOnclicksForFormSubmissions = (gameBoard) => {
     let submitDestroyerButton = document.getElementById("submit-destoyer-button");
+    let submitSubmarineButton = document.getElementById("submit-submarine-button");
+    let submitCruiserButton = document.getElementById("submit-cruiser-button");
+    let submitBattleshipButton = document.getElementById("submit-battleship-button");
+    let submitAircraftButton = document.getElementById("submit-aircraft-button");
 
+    // Destroyer Submit Fn
     submitDestroyerButton.addEventListener("click", function() {
-        let destoyerYCoordinate = parseInt(document.getElementById("y-number-destroyer").value);
-        let destoyerXCoordinate = parseInt(document.getElementById("x-number-destroyer").value);
-        let destoyerIsHorizontal = document.getElementById("t1-destroyer").value;
+        let destroyerYCoordinate = parseInt(document.getElementById("y-number-destroyer").value);
+        let destroyerXCoordinate = parseInt(document.getElementById("x-number-destroyer").value);
+        let destroyerIsHorizontal = document.getElementById("t1-destroyer").value;
 
-        if (destoyerIsHorizontal === 'Horizontal') {
-            destoyerIsHorizontal = true;
+        if (destroyerIsHorizontal === 'Horizontal') {
+            destroyerIsHorizontal = true;
         } else {
-            destoyerIsHorizontal = false;
+            destroyerIsHorizontal = false;
         }
 
-        handleFormSubmission(gameBoard, 2, destoyerYCoordinate, destoyerXCoordinate, destoyerIsHorizontal, 'destroyer');
+        handleFormSubmission(gameBoard, 2, destroyerYCoordinate, destroyerXCoordinate, destroyerIsHorizontal, 'destroyer');
     });
+
+    // Submarine Submit Fn
+    submitSubmarineButton.addEventListener("click", function() {
+        let submarineYCoordinate = parseInt(document.getElementById("y-number-submarine").value);
+        let submarineXCoordinate = parseInt(document.getElementById("x-number-submarine").value);
+        let submarineIsHorizontal = document.getElementById("t1-submarine").value;
+
+        if (submarineIsHorizontal === 'Horizontal') {
+            submarineIsHorizontal = true;
+        } else {
+            submarineIsHorizontal = false;
+        }
+
+        handleFormSubmission(gameBoard, 3, submarineYCoordinate, submarineXCoordinate, submarineIsHorizontal, 'submarine');
+    });
+
+    // Cruiser Submit Fn
+    submitCruiserButton.addEventListener("click", function() {
+        let cruiserYCoordinate = parseInt(document.getElementById("y-number-cruiser").value);
+        let cruiserXCoordinate = parseInt(document.getElementById("x-number-cruiser").value);
+        let cruiserIsHorizontal = document.getElementById("t1-cruiser").value;
+        
+        if (cruiserIsHorizontal === 'Horizontal') {
+            cruiserIsHorizontal = true;
+        } else {
+            cruiserIsHorizontal = false;
+        }
+
+        handleFormSubmission(gameBoard, 3, cruiserYCoordinate, cruiserXCoordinate, cruiserIsHorizontal, 'cruiser');
+    });
+
+    // Battleship Submit Fn
+    submitBattleshipButton.addEventListener("click", function() {
+        let battleshipYCoordinate = parseInt(document.getElementById("y-number-battleship").value);
+        let battleshipXCoordinate = parseInt(document.getElementById("x-number-battleship").value);
+        let battleshipHorizontal = document.getElementById("t1-battleship").value;
+        
+        if (battleshipHorizontal === 'Horizontal') {
+            battleshipHorizontal = true;
+        } else {
+            battleshipHorizontal = false;
+        }
+
+        handleFormSubmission(gameBoard, 4, battleshipYCoordinate, battleshipXCoordinate, battleshipHorizontal, 'battleship');
+    });
+
+    // Aircraft Submit Fn
+    submitAircraftButton.addEventListener("click", function() {
+        let aircraftYCoordinate = parseInt(document.getElementById("y-number-aircraft").value);
+        let aircraftXCoordinate = parseInt(document.getElementById("x-number-aircraft").value);
+        let aircraftHorizontal = document.getElementById("t1-aircraft").value;
+        
+        if (aircraftHorizontal === 'Horizontal') {
+            aircraftHorizontal = true;
+        } else {
+            aircraftHorizontal = false;
+        }
+
+        handleFormSubmission(gameBoard, 5, aircraftYCoordinate, aircraftXCoordinate, aircraftHorizontal, 'aircraft carrier');
+    });
+
 };
 
 // This will run after each attack on a board

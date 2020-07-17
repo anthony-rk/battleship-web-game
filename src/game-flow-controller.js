@@ -21,7 +21,6 @@ const gameFlowController = () => {
         addOnclicksForFormSubmissions(player1Gameboard);
     };
 
-
     // Set up player objects
     // const player1Name = setUpPlayerName();
     const player1Name = 'anthony';
