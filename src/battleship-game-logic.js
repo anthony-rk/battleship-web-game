@@ -555,7 +555,7 @@ const gameBoardFactory = () => {
 
 
 // shipValidator(player1Gameboard, 2, 1, 1, false, 'destroyer')
-const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
+const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal) => {
 	let isValid = true;
 	// Check if the shipLength from xCoord and yCoord fits in the board, first step.
 	const maxX = xCoordinate + shipLength;
@@ -592,12 +592,12 @@ const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizo
 };
 
 const handleFormSubmission = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
-	const isValidForm = shipValidator(gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
+	const isValidForm = shipValidator(gameBoard, shipLength, yCoordinate, xCoordinate, isHorizontal);
 
 	if (isValidForm === true) {
 		gameBoard.addShip(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
-		// console.log(gameBoard.board)
-	}
+		console.log(gameBoard.board)
+	} else { console.log("isValidForm is false...")}
 };
 
 export {
