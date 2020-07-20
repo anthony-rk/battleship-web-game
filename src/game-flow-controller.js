@@ -1,6 +1,6 @@
 // Code for controlling the flow of the game. 
 import { playerFactory, gameBoardFactory } from './battleship-game-logic';
-import { addOnclicks, resetGameBoards, addOnclicksForFormSubmissions } from './game-flow-DOM';
+import { addOnclicks, resetGameBoards, addOnclicksForFormSubmissions, setUpComputerGameboard } from './game-flow-DOM';
 
 const setUpPlayerName = () => {
     let newPlayerName = prompt("What is your name?");
@@ -27,12 +27,8 @@ const gameFlowController = () => {
     const player1 = playerFactory(player1Name, player2Gameboard);
     const player2 = playerFactory('computer', player1Gameboard);
 
-    // Add Boats to the boards manually for testing
-    player2Gameboard.addShip(2, 1, 1, true, 'destroyer');
-    player2Gameboard.addShip(3, 3, 1, true, 'submarine');
-    player2Gameboard.addShip(3, 4, 2, true, 'cruiser');
-    player2Gameboard.addShip(4, 5, 2, true, 'battleship');
-    player2Gameboard.addShip(5, 6, 2, true, 'aircraft carrier');
+    // Add Computer's Ships to their board
+    setUpComputerGameboard(player2Gameboard);
 
     // Show the forms for placing ships on the board
         // Needs to look cleaner

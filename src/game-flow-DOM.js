@@ -185,8 +185,28 @@ const updateBoardDisplay = (gameBoard, playerName) => {
     }
 };
 
+const setUpComputerGameboard = (gameBoard) => {
+    let randomValue = Math.floor(Math.random() * 2 + 1);
+
+    if (randomValue % 2 === 0) {
+        gameBoard.addShip(2, 1, 1, true, 'destroyer');
+        gameBoard.addShip(3, 3, 1, true, 'submarine');
+        gameBoard.addShip(3, 4, 2, true, 'cruiser');
+        gameBoard.addShip(4, 2, 8, false, 'battleship');
+        gameBoard.addShip(5, 6, 4, true, 'aircraft carrier');
+    }
+    else {
+        gameBoard.addShip(2, 1, 5, false, 'destroyer');
+        gameBoard.addShip(3, 3, 4, true, 'submarine');
+        gameBoard.addShip(3, 8, 3, true, 'cruiser');
+        gameBoard.addShip(4, 5, 7, false, 'battleship');
+        gameBoard.addShip(5, 1, 8, true, 'aircraft carrier');
+    }
+};
+
 export {
     addOnclicks,
     resetGameBoards,
     addOnclicksForFormSubmissions,
+    setUpComputerGameboard,
 }
