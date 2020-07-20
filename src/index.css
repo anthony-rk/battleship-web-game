@@ -63,6 +63,10 @@ body {
     display: inline-block;
 }
 
+.has-a-ship {
+    background-color: blue;
+}
+
 .ship-has-been-hit {
     background-color: green;
 }

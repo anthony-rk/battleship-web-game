@@ -1,3 +1,5 @@
+import { updateBoardDisplay } from './game-flow-DOM';
+
 // Code for Battleship Game //
 const sum = (a, b) => {
 	return a + b;
@@ -596,7 +598,12 @@ const handleFormSubmission = (gameBoard, shipLength, yCoordinate, xCoordinate, i
 
 	if (isValidForm === true) {
 		gameBoard.addShip(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
-		console.log(gameBoard.board)
+		// Update the gameboard visual display here
+		updateBoardDisplay(gameBoard, 'player1');
+
+		console.log(gameBoard.board); // Remove this once good
+
+
 	} else { console.log("isValidForm is false...")}
 };
 

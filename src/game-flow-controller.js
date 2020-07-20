@@ -34,6 +34,7 @@ const gameFlowController = () => {
 
     // Add Boats to the boards manually for testing
         // Need to get this info to tie into the Game Board on index.html
+        
     // player1Gameboard.addShip(2, 1, 1, true, 'destroyer');
     // player1Gameboard.addShip(3, 3, 1, true, 'submarine');
     // player1Gameboard.addShip(3, 1, 2, true, 'cruiser');

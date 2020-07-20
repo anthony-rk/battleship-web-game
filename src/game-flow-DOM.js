@@ -1,5 +1,5 @@
 // Code for DOM Manipulation
-import { handleFormSubmission, gameBoardFactory } from "./battleship-game-logic";
+import { handleFormSubmission } from "./battleship-game-logic";
 
 const resetGameBoards = () => {
     // Left Board, Player 1
@@ -162,6 +162,10 @@ const updateBoardDisplay = (gameBoard, playerName) => {
             } else {
                 gameBoardSquare.classList.add('game-board-square');
             }
+            
+            if (gameBoard.board[i][j].hasShip === true && playerName == 'player1'){
+                gameBoardSquare.classList.add('has-a-ship');
+            }
         }
     }
 };
@@ -169,5 +173,5 @@ const updateBoardDisplay = (gameBoard, playerName) => {
 export {
     addOnclicks,
     resetGameBoards,
-    addOnclicksForFormSubmissions
+    addOnclicksForFormSubmissions,
 }
