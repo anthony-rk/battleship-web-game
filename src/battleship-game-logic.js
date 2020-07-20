@@ -6,8 +6,8 @@ const sum = (a, b) => {
 };
 
    // Ship Factory Function // 
-  //					   //
- //						  //
+  //                       //
+ //                       //
 // Ship Factory Function //
 const shipFactory = (shipLength, yCoordinate, xCoordinate, isHorizontal, shipID) => {
 	let isSunk = false;
@@ -89,6 +89,8 @@ const playerFactory = (name, enemyGameBoard) => {
 
 // Gameboard Factory Function
 const gameBoardFactory = () => {
+	let shipsOnBoard = 0;
+
 	const shipContainerObj = {
 		'destroyer': {}, 
 		'submarine': {}, 
@@ -552,7 +554,7 @@ const gameBoardFactory = () => {
 		}
 	};
 
-	return { board, addShip, receiveAttack, shipContainerObj, gameFinishedCheck, };
+	return { board, addShip, receiveAttack, shipContainerObj, gameFinishedCheck, shipsOnBoard };
   };
 
 
@@ -588,8 +590,6 @@ const shipValidator = (gameBoard, shipLength, yCoordinate, xCoordinate, isHorizo
 		}
 	};
 
-	
-	// Check if the ship has already been placed, could be in another function or on the HTML form validation step
 	return isValid;
 };
 
@@ -598,12 +598,8 @@ const handleFormSubmission = (gameBoard, shipLength, yCoordinate, xCoordinate, i
 
 	if (isValidForm === true) {
 		gameBoard.addShip(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
-		// Update the gameboard visual display here
-		// updateBoardDisplay(gameBoard, 'player1');
-
-		console.log(gameBoard.board); // Remove this once good
-
-
+		gameBoard.shipsOnBoard++;
+	
 	} else { console.log("isValidForm is false...")}
 };
 
