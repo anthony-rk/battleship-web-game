@@ -13,6 +13,9 @@ const resetGameBoards = () => {
             if (gameBoardSquare.classList.contains('hit-and-miss')) {
                 gameBoardSquare.classList.remove('hit-and-miss');
             }
+            if (gameBoardSquare.classList.contains('has-a-ship')) {
+                gameBoardSquare.classList.remove('has-a-ship');
+            }
         }
     }
 
@@ -85,6 +88,7 @@ const addOnclicksForFormSubmissions = (gameBoard) => {
         }
 
         handleFormSubmission(gameBoard, 2, destroyerYCoordinate, destroyerXCoordinate, destroyerIsHorizontal, 'destroyer');
+        updateBoardDisplay(gameBoard, 'player1');
     });
 
     // Submarine Submit Fn
@@ -100,6 +104,7 @@ const addOnclicksForFormSubmissions = (gameBoard) => {
         }
 
         handleFormSubmission(gameBoard, 3, submarineYCoordinate, submarineXCoordinate, submarineIsHorizontal, 'submarine');
+        updateBoardDisplay(gameBoard, 'player1');
     });
 
     // Cruiser Submit Fn
@@ -115,6 +120,7 @@ const addOnclicksForFormSubmissions = (gameBoard) => {
         }
 
         handleFormSubmission(gameBoard, 3, cruiserYCoordinate, cruiserXCoordinate, cruiserIsHorizontal, 'cruiser');
+        updateBoardDisplay(gameBoard, 'player1');
     });
 
     // Battleship Submit Fn
@@ -130,6 +136,7 @@ const addOnclicksForFormSubmissions = (gameBoard) => {
         }
 
         handleFormSubmission(gameBoard, 4, battleshipYCoordinate, battleshipXCoordinate, battleshipHorizontal, 'battleship');
+        updateBoardDisplay(gameBoard, 'player1');
     });
 
     // Aircraft Submit Fn
@@ -145,6 +152,7 @@ const addOnclicksForFormSubmissions = (gameBoard) => {
         }
 
         handleFormSubmission(gameBoard, 5, aircraftYCoordinate, aircraftXCoordinate, aircraftHorizontal, 'aircraft carrier');
+        updateBoardDisplay(gameBoard, 'player1');
     });
 
 };
@@ -162,9 +170,12 @@ const updateBoardDisplay = (gameBoard, playerName) => {
             } else {
                 gameBoardSquare.classList.add('game-board-square');
             }
-            
+
             if (gameBoard.board[i][j].hasShip === true && playerName == 'player1'){
                 gameBoardSquare.classList.add('has-a-ship');
+                let shipName = gameBoard.board[i][j].shipID;
+
+                gameBoardSquare.innerHTML = shipName[0];
             }
         }
     }

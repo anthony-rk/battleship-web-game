@@ -599,7 +599,7 @@ const handleFormSubmission = (gameBoard, shipLength, yCoordinate, xCoordinate, i
 	if (isValidForm === true) {
 		gameBoard.addShip(shipLength, yCoordinate, xCoordinate, isHorizontal, shipID);
 		// Update the gameboard visual display here
-		updateBoardDisplay(gameBoard, 'player1');
+		// updateBoardDisplay(gameBoard, 'player1');
 
 		console.log(gameBoard.board); // Remove this once good
 
