@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Battleship</title>
+  </head>
+  <body>
+    <script src="bundle.js"></script>
+
+    <div id="content-div"></div>
+    <div id="forms-div">
+      <div class='ship-form'>
+        <form onsubmit="return false">
+          <label for="choose"><strong>Destroyer Location</strong></label>
+  
+          <label for="number">X-Coordinate</label>
+          <input type="number" id="x-number-destroyer" name="amount" required value="1" min="1" max="8">
+          <label for="number">Y-Coordinate</label>
+          <input type="number" id="y-number-destroyer" name="amount" required value="1" min="1" max="8">
+  
+          <label for="t1">Horizontal or Vertical</label>
+          <input type="text" id="t1-destroyer" name="horizontal-vertical-selection" list="l1" required
+            pattern="[Hh]orizontal|[Vv]ertical">
+          <datalist id="l1">
+            <option>Horizontal</option>
+            <option>Vertical</option>
+          </datalist>
+  
+          <button id="submit-destoyer-button" >Submit</button>
+        </form>
+      </div>
+
+      <div class='ship-form'>
+        <form onsubmit="return false">
+          <label for="choose"><strong>Submarine Location</strong></label>
+
+          <label for="number">X-Coordinate</label>
+          <input type="number" id="x-number-submarine" name="amount" required value="1" min="1" max="8">
+          <label for="number">Y-Coordinate</label>
+          <input type="number" id="y-number-submarine" name="amount" required value="1" min="1" max="8">
+
+          <label for="t1">Horizontal or Vertical</label>
+          <input type="text" id="t1-submarine" name="horizontal-vertical-selection" list="l1" required
+            pattern="[Hh]orizontal|[Vv]ertical">
+          <datalist id="l1">
+            <option>Horizontal</option>
+            <option>Vertical</option>
+          </datalist>
+
+          <button id="submit-submarine-button" >Submit</button>
+        </form>
+      </div>
+
+      <div class='ship-form'>
+        <form onsubmit="return false">
+          <label for="choose"><strong>Cruiser Location</strong></label>
+
+          <label for="number">X-Coordinate</label>
+          <input type="number" id="x-number-cruiser" name="amount" required value="1" min="1" max="8">
+          <label for="number">Y-Coordinate</label>
+          <input type="number" id="y-number-cruiser" name="amount" required value="1" min="1" max="8">
+
+          <label for="t1">Horizontal or Vertical</label>
+          <input type="text" id="t1-cruiser" name="horizontal-vertical-selection" list="l1" required
+            pattern="[Hh]orizontal|[Vv]ertical">
+          <datalist id="l1">
+            <option>Horizontal</option>
+            <option>Vertical</option>
+          </datalist>
+
+          <button id="submit-cruiser-button">Submit</button>
+        </form>
+      </div>
+
+      <div class='ship-form'>
+        <form onsubmit="return false">
+          <label for="choose"><strong>Battleship Location</strong></label>
+
+          <label for="number">X-Coordinate</label>
+          <input type="number" id="x-number-battleship" name="amount" required value="1" min="1" max="8">
+          <label for="number">Y-Coordinate</label>
+          <input type="number" id="y-number-battleship" name="amount" required value="1" min="1" max="8">
+
+          <label for="t1">Horizontal or Vertical</label>
+          <input type="text" id="t1-battleship" name="horizontal-vertical-selection" list="l1" required
+            pattern="[Hh]orizontal|[Vv]ertical">
+          <datalist id="l1">
+            <option>Horizontal</option>
+            <option>Vertical</option>
+          </datalist>
+
+          <button id="submit-battleship-button">Submit</button>
+        </form>
+      </div>
+      
+      <div class='ship-form'>
+        <form onsubmit="return false">
+          <label for="choose"><strong>Aircraft Carrier Location</strong></label>
+
+          <label for="number">X-Coordinate</label>
+          <input type="number" id="x-number-aircraft" name="amount" required value="1" min="1" max="8">
+          <label for="number">Y-Coordinate</label>
+          <input type="number" id="y-number-aircraft" name="amount" required value="1" min="1" max="8">
+
+          <label for="t1">Horizontal or Vertical</label>
+          <input type="text" id="t1-aircraft" name="horizontal-vertical-selection" list="l1" required
+            pattern="[Hh]orizontal|[Vv]ertical">
+          <datalist id="l1">
+            <option>Horizontal</option>
+            <option>Vertical</option>
+          </datalist>
+
+          <button id="submit-aircraft-button">Submit</button>
+        </form>
+      </div>
+
+      <button id="match-start">Start Match</button>
+
+    </div>
+
+  </body>
+</html>
