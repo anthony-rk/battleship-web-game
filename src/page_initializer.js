@@ -57,13 +57,12 @@ const pageInitializer = () => {
     // Need to make 8x8 grid aka 2 for loops
     for (let i = 1; i < 9; i++) {
         for (let j = 1; j < 9; j++) {
-            let gameBoardSquare = component('div', '_', i+'-player1-'+j);
+            let gameBoardSquare = component('div', '', i+'-player1-'+j);
             gameBoardSquare.classList.add("game-board-square");
 
             // add onclicks
             gameBoardSquare.addEventListener('click', function() {
                 console.log("Hello" + ' ' + gameBoardSquare.id);
-                // gameBoard1.receiveAttack(i, j);
             })
             player1GameBoard.appendChild(gameBoardSquare);
         }
@@ -77,14 +76,12 @@ const pageInitializer = () => {
     // Need to make 8x8 grid aka 2 for loops
     for (let i = 1; i < 9; i++) {
         for (let j = 1; j < 9; j++) {
-            let gameBoardSquare = component('div', '_', i+'-computer-'+j);
+            let gameBoardSquare = component('div', '', i+'-computer-'+j);
             gameBoardSquare.classList.add("game-board-square");
 
             // add onclicks
             gameBoardSquare.addEventListener('click', function() {
                 console.log("Hello" + ' ' + gameBoardSquare.id);
-                // gameBoard2.receiveAttack(i, j);
-                // player1.attack(i, j);
             })
             player2GameBoard.appendChild(gameBoardSquare);
         }

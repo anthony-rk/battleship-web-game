@@ -40,6 +40,7 @@ const gameFlowController = () => {
     matchStartButton.addEventListener('click', () => {
         if (player1Gameboard.shipsOnBoard === 5) {
             addOnclicks(player1, player2Gameboard, player2, player1Gameboard);
+            document.getElementById('forms-div').style.visibility = 'hidden';
         }
     });
 

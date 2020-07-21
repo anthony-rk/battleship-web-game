@@ -7,7 +7,7 @@ const resetGameBoards = () => {
         for (let j = 1; j < 9; j++) {
             let gameBoardSquare = document.getElementById(i+'-player1-'+j);
 
-            gameBoardSquare.innerHTML = '_';
+            gameBoardSquare.innerHTML = '-';
 
             if (gameBoardSquare.classList.contains('ship-has-been-hit')) {
                 gameBoardSquare.classList.remove('ship-has-been-hit');
@@ -26,7 +26,7 @@ const resetGameBoards = () => {
         for (let j = 1; j < 9; j++) {
             let gameBoardSquare = document.getElementById(i+'-computer-'+j);
 
-            gameBoardSquare.innerHTML = '_';
+            gameBoardSquare.innerHTML = '-';
 
             if (gameBoardSquare.classList.contains('ship-has-been-hit')) {
                 gameBoardSquare.classList.remove('ship-has-been-hit');
