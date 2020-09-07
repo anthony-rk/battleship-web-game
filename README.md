@@ -1,6 +1,6 @@
 # battleship-web-game
 
-**Open the App here:** https://dry-coast-18727.herokuapp.com/
+**Open the App here:** https://battleship-webgame.herokuapp.com/
 
 The goal of this project was to create a full-stack web application where a user can play Battleship 
 
